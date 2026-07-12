@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Marketing e Público-alvo | Tiny Creative</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- tsParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0e0e0e;
+            --text-main: #f3f3f3;
+            --text-muted: #a0a0a0;
+            --accent-light: #a2d149;
+            --accent-base: #75a823;
+            --accent-dark: #2a3b0d;
+            --gray-dark: #4a4a4a;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --border-color: rgba(74, 74, 74, 0.4);
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle Container */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 9999;
+            display: none; /* DESLIGADO TEMPORARIAMENTE PARA DESENVOLVIMENTO */
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .login-logo {
+            max-height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .login-box h2 {
+            font-family: var(--font-heading);
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .login-box p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .login-box input:focus {
+            border-color: var(--accent-base);
+        }
+        
+        #content-wrapper {
+            display: block; /* Forçado para aparecer */
+            opacity: 1; /* Forçado para aparecer */
+            transition: opacity 0.5s ease;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(14,14,14,0.9) 0%, rgba(14,14,14,0) 100%);
+        }
+
+        .logo-link img {
+            max-height: 50px;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-top: 15px;
+            display: block;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        /* Sections */
+        .section-block {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-base);
+            transition: width 0.3s ease;
+        }
+
+        .section-block:hover .section-header h2::after {
+            width: 80px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '✦';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: var(--accent-base);
+            font-size: 1.2rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-base);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(117, 168, 35, 0.15);
+        }
+
+        .card:hover::before {
+            color: var(--accent-light);
+            transform: scale(1.3) rotate(20deg);
+        }
+
+        .card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-left: 30px;
+            color: var(--text-main);
+        }
+
+        .card-content {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card-content strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .field-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .field-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* Span to highlight data that is replaced from template */
+        .template-data {
+            color: var(--text-main);
+        }
+
+        /* Lists */
+        .styled-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .styled-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        .styled-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-base);
+            font-size: 1.5rem;
+            line-height: 1;
+            top: -4px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 35px;
+            background-color: transparent;
+            color: var(--accent-light);
+            border: 1px solid var(--accent-base);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-base);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(117, 168, 35, 0.2);
+        }
+
+        .btn-primary svg {
+            margin-left: 12px;
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(6px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 80px;
+        }
+        
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title h1 {
+                font-size: 2.5rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    
+    <style>
+        /* Navbar */
+        .top-nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-btn.active, .nav-btn:hover {
+            border-color: var(--accent-base);
+            color: var(--accent-light);
+            background: rgba(117, 168, 35, 0.1);
+        }
+
+        /* Tabs */
+        .tab-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Calendar */
+        .calendar-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 40px;
+            color: var(--text-main);
+        }
+        .fc-theme-standard td, .fc-theme-standard th {
+            border-color: var(--border-color);
+        }
+        .fc-theme-standard .fc-scrollgrid {
+            border-color: var(--border-color);
+        }
+        .fc .fc-toolbar-title {
+            color: var(--text-main);
+            font-family: var(--font-heading);
+        }
+        .fc .fc-button-primary {
+            background-color: transparent;
+            border-color: var(--border-color);
+            color: var(--text-main);
+        }
+        .fc .fc-button-primary:not(:disabled):active, 
+        .fc .fc-button-primary:not(:disabled).fc-button-active,
+        .fc .fc-button-primary:hover {
+            background-color: var(--accent-base);
+            border-color: var(--accent-base);
+            color: var(--bg-color);
+        }
+        .fc-daygrid-day-number {
+            color: var(--text-main);
+        }
+
+        /* Modal */
+        #custom-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .custom-modal {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        .custom-modal h3 {
+            font-family: var(--font-heading);
+            margin-bottom: 15px;
+            color: var(--accent-light);
+        }
+        .custom-modal p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .modal-iframe-container {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+        }
+        .modal-iframe-container iframe {
+            width: 100%; height: 100%; border: none;
+        }
+        .modal-textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: var(--font-body);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        .btn-approve {
+            background-color: var(--accent-base);
+            color: var(--bg-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-reject {
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-close-modal {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="tsparticles"></div>
+
+    <!-- Main Content Wrapper -->
+    <div id="content-wrapper">
+        
+        <header>
+            <a href="#" class="logo-link">
+                <img src="https://www.dropbox.com/scl/fi/tr7x6hkhvh3juvhzo49cp/02_TINY_BRANCA.png?rlkey=4p9yyohwjzfyvaj634nfeh5ug&st=qqhbw1mw&raw=1" alt="Tiny Creative">
+            </a>
+            <span class="logo-sub">Central do Cliente</span>
+            <nav class="top-nav">
+                <a href="index.html" class="nav-btn active" style="text-decoration:none;">Estratégia de marketing</a>
+                <a href="postagens.html" class="nav-btn" style="text-decoration:none;">Aprovação de postagens</a>
+                <a href="criativos.html" class="nav-btn" style="text-decoration:none;">Aprovação de criativos</a>
+            </nav>
+        </header>
+    
+
+        <main>
+            <div id="tab-estrategia" class="tab-content active">
+            <!-- Hero -->
+            <section class="page-title">
+                <h1>Pesquisa de Marketing<br>e Público-alvo</h1>
+            </section>
+
+            <!-- Seção 1: Pesquisa de Marketing -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>01. Pesquisa de Marketing</h2>
+                    <p>Benchmark e Análise de Concorrentes da Marca</p>
+                </div>
+                
+                <div class="card-grid">
+                    <!-- Concorrente 01 -->
+                    <div class="card">
+                        <h3>Concorrente 01</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Nome:</strong> <span class="template-data">Inserir Nome</span></div>
+                            <div class="field-group"><strong>Conta analisada:</strong> <span class="template-data">@usuario</span></div>
+                            <div class="field-group"><strong>Site:</strong> <span class="template-data">www.site.com.br</span></div>
+                            <div class="field-group"><strong>Principal rede social:</strong> <span class="template-data">Instagram</span></div>
+                            <div class="field-group"><strong>Número de seguidores:</strong> <span class="template-data">10k</span></div>
+                            
+                            <div class="field-group">
+                                <strong>Análise de conteúdos que engajam:</strong>
+                                <ul class="styled-list">
+                                    <li>Tipo 01: <span class="template-data">Descreva o conteúdo...</span></li>
+                                    <li>Tipo 02: <span class="template-data">Descreva o conteúdo...</span></li>
+                                    <li>Tipo 03: <span class="template-data">Descreva o conteúdo...</span></li>
+                                </ul>
+                            </div>
+                            <div class="field-group"><strong>Análise de infoprodutos/ofertas:</strong> <br><span class="template-data">Escreva aqui...</span></div>
+                            <div class="field-group"><strong>Análise de Hashtags e SEO:</strong> <br><span class="template-data">Escreva aqui...</span></div>
+                            <div class="field-group"><strong>Análise de Destaques:</strong> <br><span class="template-data">Escreva aqui...</span></div>
+                            <div class="field-group"><strong>Conclusão:</strong> <br><span class="template-data">Escreva aqui a conclusão sobre este concorrente...</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Concorrente 02 -->
+                    <div class="card">
+                        <h3>Concorrente 02</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Nome:</strong> <span class="template-data">Inserir Nome</span></div>
+                            <div class="field-group"><strong>Conta analisada:</strong> <span class="template-data">@usuario</span></div>
+                            <div class="field-group"><strong>Site:</strong> <span class="template-data">www.site.com.br</span></div>
+                            <div class="field-group"><strong>Principal rede social:</strong> <span class="template-data">Instagram</span></div>
+                            <div class="field-group"><strong>Número de seguidores:</strong> <span class="template-data">10k</span></div>
+                            
+                            <div class="field-group">
+                                <strong>Análise de conteúdos que engajam:</strong>
+                                <ul class="styled-list">
+                                    <li>Tipo 01: <span class="template-data">Descreva o conteúdo...</span></li>
+                                    <li>Tipo 02: <span class="template-data">Descreva o conteúdo...</span></li>
+                                    <li>Tipo 03: <span class="template-data">Descreva o conteúdo...</span></li>
+                                </ul>
+                            </div>
+                            <div class="field-group"><strong>Análise de infoprodutos/ofertas:</strong> <br><span class="template-data">Escreva aqui...</span></div>
+                            <div class="field-group"><strong>Análise de Hashtags e SEO:</strong> <br><span class="template-data">Escreva aqui...</span></div>
+                            <div class="field-group"><strong>Análise de Destaques:</strong> <br><span class="template-data">Escreva aqui...</span></div>
+                            <div class="field-group"><strong>Conclusão:</strong> <br><span class="template-data">Escreva aqui a conclusão sobre este concorrente...</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção 2: Referências de Autoridade -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>Referências de Autoridade</h2>
+                    <p>Instagram, TikTok, Youtube, Substack e outras redes necessárias</p>
+                </div>
+                
+                <div class="card-grid">
+                    <!-- Referência 01 -->
+                    <div class="card">
+                        <h3>Referência 01</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Conta analisada:</strong> <span class="template-data">@referencia</span></div>
+                            <div class="field-group"><strong>Número de seguidores:</strong> <span class="template-data">69,7 mil</span></div>
+                            <div class="field-group"><strong>Frequência de posts:</strong> <span class="template-data">Diário</span></div>
+                            <div class="field-group"><strong>Descrição da conta:</strong> <br><span class="template-data">...</span></div>
+                            
+                            <div class="field-group">
+                                <strong>Posts de melhor performance:</strong>
+                                <ul class="styled-list">
+                                    <li><strong>Post 01:</strong> Legenda: <span class="template-data">...</span> <br>Curtidas: <span class="template-data">...</span></li>
+                                    <li><strong>Post 02:</strong> Legenda: <span class="template-data">...</span> <br>Curtidas: <span class="template-data">...</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Referência 02 -->
+                    <div class="card">
+                        <h3>Referência 02</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Conta analisada:</strong> <span class="template-data">@referencia</span></div>
+                            <div class="field-group"><strong>Número de seguidores:</strong> <span class="template-data">100 mil</span></div>
+                            <div class="field-group"><strong>Frequência de posts:</strong> <span class="template-data">Semanal</span></div>
+                            <div class="field-group"><strong>Descrição da conta:</strong> <br><span class="template-data">...</span></div>
+                            
+                            <div class="field-group">
+                                <strong>Posts de melhor performance:</strong>
+                                <ul class="styled-list">
+                                    <li><strong>Post 01:</strong> Legenda: <span class="template-data">...</span> <br>Curtidas: <span class="template-data">...</span></li>
+                                    <li><strong>Post 02:</strong> Legenda: <span class="template-data">...</span> <br>Curtidas: <span class="template-data">...</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card full-width-card">
+                        <h3>Banco de Ideias</h3>
+                        <div class="card-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                            <div class="field-group" style="border: none;"><strong>Ideias para Reels:</strong><br><span class="template-data">Liste as ideias aqui...</span></div>
+                            <div class="field-group" style="border: none;"><strong>Ideias para Carrossel:</strong><br><span class="template-data">Liste as ideias aqui...</span></div>
+                            <div class="field-group" style="border: none;"><strong>Ideias para Estático:</strong><br><span class="template-data">Liste as ideias aqui...</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção 3: Público-alvo -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>02. Público-alvo</h2>
+                    <p>Perfil do cliente ideal e elaboração de Persona</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>Perfil Demográfico</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Idade:</strong> <span class="template-data">25-34 anos</span></div>
+                            <div class="field-group"><strong>Renda:</strong> <span class="template-data">R$ 5.000+</span></div>
+                            <div class="field-group"><strong>Localização:</strong> <span class="template-data">Grandes capitais</span></div>
+                            <div class="field-group"><strong>Formação:</strong> <span class="template-data">Superior completo</span></div>
+                            <div class="field-group"><strong>Gênero:</strong> <span class="template-data">Feminino</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Perfil Psicossocial</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Hobbies:</strong> <span class="template-data">Quais os hobbies?</span></div>
+                            <div class="field-group"><strong>Gostos e interesses:</strong> <span class="template-data">Quais os interesses?</span></div>
+                            <div class="field-group"><strong>Rotina e hábitos:</strong> <span class="template-data">Como é a rotina?</span></div>
+                            <div class="field-group"><strong>Dores:</strong> <span class="template-data">Quais as principais dores?</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="card full-width-card">
+                        <h3>Persona & Storytelling</h3>
+                        <div class="card-content">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                                <div>
+                                    <div class="field-group"><strong>Como a marca pode resolver meu problema?</strong><br><span class="template-data">Sua resposta aqui...</span></div>
+                                    <div class="field-group"><strong>Por que eu seguiria a marca nas redes sociais?</strong><br><span class="template-data">Sua resposta aqui...</span></div>
+                                    <div class="field-group"><strong>O que faria eu indicar a marca para alguém?</strong><br><span class="template-data">Sua resposta aqui...</span></div>
+                                </div>
+                                <div>
+                                    <div class="field-group" style="height: 100%;"><strong>Storytelling da Persona:</strong><br><span class="template-data">Escreva a história da persona aqui, como é o dia a dia dela e como o produto/serviço se encaixa perfeitamente na vida dela...</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção 4: Organizando a casa -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>03. Organizando a casa</h2>
+                    <p>Estruturação de redes sociais e canais</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>Instagram / TikTok / LinkedIn</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Nome:</strong> <span class="template-data">Nome da Marca | Palavra-chave</span></div>
+                            <div class="field-group"><strong>Usuário:</strong> <span class="template-data">@marca</span></div>
+                            <div class="field-group"><strong>Ajustar BIO:</strong>
+                                <ul class="styled-list">
+                                    <li>Transformação: <span class="template-data">...</span></li>
+                                    <li>Autoridade: <span class="template-data">...</span></li>
+                                    <li>Conexão/Local: <span class="template-data">...</span></li>
+                                    <li>CTA: <span class="template-data">Clique aqui ⬇</span></li>
+                                </ul>
+                            </div>
+                            <div class="field-group"><strong>Sugestão de Destaques:</strong>
+                                <ul class="styled-list">
+                                    <li><span class="template-data">Quem nós somos?</span></li>
+                                    <li><span class="template-data">Depoimentos</span></li>
+                                    <li><span class="template-data">Produtos/serviços</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Google & Conclusões</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Aprimoramento SEO no site:</strong> <br><span class="template-data">O que melhorar no site...</span></div>
+                            <div class="field-group"><strong>Google Meu Negócio:</strong> <br><span class="template-data">Editar perfil e infos...</span></div>
+                            
+                            <h4 style="margin: 25px 0 10px; color: var(--text-main); font-family: var(--font-heading); font-size: 1.2rem;">Primeiros Passos / Foco</h4>
+                            
+                            <div class="field-group"><strong>Devemos focar em conteúdos:</strong> <br><span class="template-data">Quais os principais formatos e estilo?</span></div>
+                            <div class="field-group"><strong>Devemos focar nos temas:</strong> <br><span class="template-data">Quais os temas?</span></div>
+                            <div class="field-group"><strong>Levar em consideração:</strong> <br><span class="template-data">Pontos de atenção...</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção 5: Tráfego Pago -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>04. Tráfego Pago</h2>
+                    <p>Contexto de Campanha e Estratégia de Anúncios</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card full-width-card">
+                        <h3>Contexto e Segmentação</h3>
+                        <div class="card-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                            <div>
+                                <div class="field-group"><strong>Produto/Serviço Foco:</strong> <span class="template-data">...</span></div>
+                                <div class="field-group"><strong>Objetivo Principal:</strong> <span class="template-data">...</span></div>
+                                <div class="field-group"><strong>Verba Mensal Sugerida:</strong> <span class="template-data">R$ ...</span></div>
+                                <div class="field-group"><strong>Promessa Central (Big Idea):</strong> <span class="template-data">...</span></div>
+                                <div class="field-group"><strong>Funil de Marketing:</strong> <br>
+                                    <ul class="styled-list">
+                                        <li>Topo: <span class="template-data">...</span></li>
+                                        <li>Meio: <span class="template-data">...</span></li>
+                                        <li>Fundo: <span class="template-data">...</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="field-group"><strong>Interesses (Público Frio):</strong> <br><span class="template-data">"Marketing Digital, Pequenas Empresas, Empreendedorismo"</span></div>
+                                <div class="field-group"><strong>Públicos Personalizados (Remarketing):</strong> <br><span class="template-data">"Envolvimento IG 30 Dias", "Visitantes do Site 7 Dias"</span></div>
+                                <div class="field-group"><strong>Exclusões (O que NÃO queremos):</strong> <br><span class="template-data">"Excluir quem já comprou o produto" ou "Excluir afiliados"</span></div>
+                                
+                                <h4 style="margin: 25px 0 10px; color: var(--text-main); font-family: var(--font-heading); font-size: 1.2rem;">Referências de Anúncios</h4>
+                                <ul class="styled-list">
+                                    <li>Google: <span class="template-data">Link 1</span>, <span class="template-data">Link 2</span></li>
+                                    <li>Meta/TikTok: <span class="template-data">Link 1</span>, <span class="template-data">Link 2</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ideias de Anúncios -->
+                    <div class="card">
+                        <h3>Anúncio 01</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Ângulo:</strong> <span class="template-data">Dor/Benefício/Autoridade...</span></div>
+                            <div class="field-group"><strong>Gancho:</strong> <br><span class="template-data">Primeiros 3 segundos...</span></div>
+                            <div class="field-group"><strong>Corpo:</strong> <br><span class="template-data">Desenvolvimento...</span></div>
+                            <div class="field-group"><strong>CTA:</strong> <span class="template-data">Chamada para ação...</span></div>
+                            <div class="field-group"><strong>Tipo de campanha (Google):</strong> <span class="template-data">Pesquisa / Display...</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Anúncio 02</h3>
+                        <div class="card-content">
+                            <div class="field-group"><strong>Ângulo:</strong> <span class="template-data">Dor/Benefício/Autoridade...</span></div>
+                            <div class="field-group"><strong>Gancho:</strong> <br><span class="template-data">Primeiros 3 segundos...</span></div>
+                            <div class="field-group"><strong>Corpo:</strong> <br><span class="template-data">Desenvolvimento...</span></div>
+                            <div class="field-group"><strong>CTA:</strong> <span class="template-data">Chamada para ação...</span></div>
+                            <div class="field-group"><strong>Tipo de campanha (Google):</strong> <span class="template-data">Pesquisa / Display...</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 60px;">
+                    <!-- Hide print button when printing -->
+                    <style>
+                        @media print {
+                            .btn-primary { display: none !important; }
+                            #tsparticles { display: none !important; }
+                            body { background: white; color: black; }
+                            .card { border-color: #ddd; box-shadow: none; break-inside: avoid; background: white; }
+                            .card h3, .section-header h2 { color: black; }
+                            .template-data { color: black; }
+                            .template-data:empty::before { content: "_______"; color: #ccc; }
+                            .logo-link img { filter: invert(1); } /* Invert logo for white bg */
+                            header, footer { border-color: #ddd; }
+                        }
+                    </style>
+                    <a href="#" class="btn-primary" onclick="window.print(); return false;">
+                        Salvar em PDF / Imprimir
+                        <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                    </a>
+                </div>
+            </section>
+
+        
+            </div> <!-- End tab-estrategia -->
+            
+            
+            </div>
+
+            
+            </div>
+            
+        </main>
+        
+        
+        </div>
+        
+        <div id="loading-overlay">Processando...</div>
+    
+
+        <footer>
+            <p>&copy; 2026 Tiny Creative. Modelo de Pesquisa e Planejamento.</p>
+        </footer>
+    </div>
+
+    
+
+    <!-- Init Particles -->
+    <script>
+        tsParticles.load("tsparticles", {
+            background: {
+                color: {
+                    value: "transparent",
+                },
+            },
+            particles: {
+                number: {
+                    value: 60,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: ["#a2d149", "#75a823", "#ffffff"]
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                move: {
+                    enable: true,
+                    speed: 0.6,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+</body>
+</html>
