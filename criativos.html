@@ -992,10 +992,10 @@
 
                 <button class="btn-close-modal" onclick="closeModal()">×</button>
                 <h3 id="modal-title">Título do Post</h3>
-                <div id="modal-etapa-badge" style="display:none; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold; color:#fff; margin-bottom:15px; margin-top:-5px; letter-spacing:0.5px; width:fit-content;"></div>
+                <div id="modal-etapa-badge" style="display:none; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold; color:#fff; margin-bottom:15px; margin-top:-5px; letter-spacing:0.5px; width:fit-content; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
                 <div id="modal-tabs-container" style="display:flex; gap:10px; margin-bottom:10px;">
-                    <button id="tab-legenda" style="padding:6px 12px; border:none; background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Texto / Legenda</button>
-                    <button id="tab-briefing" style="padding:6px 12px; border:1px solid var(--border-color); background:transparent; color:var(--text-main); border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Briefing Original</button>
+                    <button id="tab-legenda" style="padding:6px 12px; border:2px solid var(--accent-base); background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Texto / Legenda</button>
+                    <button id="tab-briefing" style="padding:6px 12px; border:1px solid var(--border-color); background:transparent; color:var(--text-main); border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Briefing</button>
                 </div>
                 <div id="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; max-height:200px; overflow-y:auto; white-space:pre-wrap;">
                     <p id="modal-desc" style="margin:0; font-size:14px; line-height:1.5;"></p>
@@ -1571,7 +1571,7 @@
             tabLegenda.onclick = () => {
                 tabLegenda.style.background = 'var(--primary)';
                 tabLegenda.style.color = '#fff';
-                tabLegenda.style.border = 'none';
+                tabLegenda.style.border = '2px solid var(--accent-base)';
                 tabBriefing.style.background = 'transparent';
                 tabBriefing.style.color = 'var(--text-main)';
                 tabBriefing.style.border = '1px solid var(--border-color)';
@@ -1582,7 +1582,7 @@
             tabBriefing.onclick = () => {
                 tabBriefing.style.background = 'var(--primary)';
                 tabBriefing.style.color = '#fff';
-                tabBriefing.style.border = 'none';
+                tabBriefing.style.border = '2px solid var(--accent-base)';
                 tabLegenda.style.background = 'transparent';
                 tabLegenda.style.color = 'var(--text-main)';
                 tabLegenda.style.border = '1px solid var(--border-color)';
@@ -1615,6 +1615,9 @@
 
             if (urls.length > 0) {
                 iframeBox.innerHTML = '';
+                iframeBox.style.display = 'flex';
+                iframeBox.style.flexDirection = 'column';
+                
                 if (urls.length > 1) {
                     const titleEl = document.createElement('h3');
                     titleEl.innerText = "Telas do carrossel ou variações do material:";
@@ -1624,24 +1627,37 @@
                     titleEl.style.fontWeight = '500';
                     iframeBox.appendChild(titleEl);
                 }
+                
+                const wrapper = document.createElement('div');
+                wrapper.style.display = 'flex';
+                wrapper.style.gap = '10px';
+                wrapper.style.overflowX = 'auto';
+                wrapper.style.width = '100%';
+                wrapper.style.paddingBottom = '5px';
+                
                 urls.forEach(url => {
                     let finalUrl = url;
-                    if (finalUrl.includes('drive.google.com/file/d/') && finalUrl.includes('/view')) {
-                        finalUrl = finalUrl.replace(/\/view.*$/, '/preview?rm=minimal');
+                    if (url.includes('drive.google.com/file/d/')) {
+                        const fileId = url.split('/d/')[1].split('/')[0];
+                        finalUrl = `https://drive.google.com/file/d/${fileId}/preview?rm=minimal`;
                     }
                     const ifr = document.createElement('iframe');
                     ifr.src = finalUrl;
-                    ifr.allow = "autoplay";
-                    ifr.style.width = urls.length > 1 ? '48%' : '100%';
-                    ifr.style.height = '100%';
                     ifr.style.border = 'none';
-                    ifr.style.flexShrink = '0';
+                    ifr.style.width = '100%';
+                    ifr.style.minHeight = '400px';
                     ifr.style.borderRadius = '8px';
-                    iframeBox.appendChild(ifr);
+                    ifr.allow = 'autoplay';
+                    
+                    if (urls.length > 1) {
+                        ifr.style.minWidth = '80%';
+                        ifr.style.flexShrink = '0';
+                    }
+                    
+                    wrapper.appendChild(ifr);
                 });
-                iframeBox.style.display = 'flex';
-                iframeBox.style.gap = '10px';
-                iframeBox.style.overflowX = 'auto';
+                
+                iframeBox.appendChild(wrapper);
             } else {
                 iframeBox.style.display = 'none';
                 iframeBox.innerHTML = '';
