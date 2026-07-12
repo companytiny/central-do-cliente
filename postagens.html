@@ -1428,12 +1428,71 @@
                     iframeBox.appendChild(titleEl);
                 }
                 
+                const carouselContainer = document.createElement('div');
+                carouselContainer.style.position = 'relative';
+                carouselContainer.style.width = '100%';
+                carouselContainer.style.display = 'flex';
+                carouselContainer.style.alignItems = 'center';
+
                 const wrapper = document.createElement('div');
                 wrapper.style.display = 'flex';
-                wrapper.style.gap = '10px';
+                wrapper.style.gap = '15px';
                 wrapper.style.overflowX = 'auto';
                 wrapper.style.width = '100%';
                 wrapper.style.paddingBottom = '5px';
+                wrapper.style.scrollBehavior = 'smooth';
+                // Ocultar scrollbar nativa via CSS inline o máximo possível
+                wrapper.style.scrollbarWidth = 'none';
+                wrapper.style.msOverflowStyle = 'none';
+                
+                // Add specific webkit hiding style directly in head if not present
+                if (!document.getElementById('carousel-hide-scroll')) {
+                    const style = document.createElement('style');
+                    style.id = 'carousel-hide-scroll';
+                    style.innerHTML = '#modal-iframe-box > div > div::-webkit-scrollbar { display: none; }';
+                    document.head.appendChild(style);
+                }
+                
+                if (urls.length > 1) {
+                    const btnPrev = document.createElement('button');
+                    btnPrev.innerHTML = '&#10094;';
+                    btnPrev.style.position = 'absolute';
+                    btnPrev.style.left = '-10px';
+                    btnPrev.style.zIndex = '10';
+                    btnPrev.style.background = 'var(--primary)';
+                    btnPrev.style.color = '#fff';
+                    btnPrev.style.border = '2px solid var(--border-color)';
+                    btnPrev.style.borderRadius = '50%';
+                    btnPrev.style.width = '36px';
+                    btnPrev.style.height = '36px';
+                    btnPrev.style.cursor = 'pointer';
+                    btnPrev.style.display = 'flex';
+                    btnPrev.style.alignItems = 'center';
+                    btnPrev.style.justifyContent = 'center';
+                    btnPrev.style.boxShadow = '0 4px 6px rgba(0,0,0,0.3)';
+                    btnPrev.onclick = () => wrapper.scrollBy({ left: -wrapper.clientWidth * 0.85, behavior: 'smooth' });
+
+                    const btnNext = document.createElement('button');
+                    btnNext.innerHTML = '&#10095;';
+                    btnNext.style.position = 'absolute';
+                    btnNext.style.right = '-10px';
+                    btnNext.style.zIndex = '10';
+                    btnNext.style.background = 'var(--primary)';
+                    btnNext.style.color = '#fff';
+                    btnNext.style.border = '2px solid var(--border-color)';
+                    btnNext.style.borderRadius = '50%';
+                    btnNext.style.width = '36px';
+                    btnNext.style.height = '36px';
+                    btnNext.style.cursor = 'pointer';
+                    btnNext.style.display = 'flex';
+                    btnNext.style.alignItems = 'center';
+                    btnNext.style.justifyContent = 'center';
+                    btnNext.style.boxShadow = '0 4px 6px rgba(0,0,0,0.3)';
+                    btnNext.onclick = () => wrapper.scrollBy({ left: wrapper.clientWidth * 0.85, behavior: 'smooth' });
+                    
+                    carouselContainer.appendChild(btnPrev);
+                    carouselContainer.appendChild(btnNext);
+                }
                 
                 urls.forEach(url => {
                     let finalUrl = url;
@@ -1450,14 +1509,15 @@
                     ifr.allow = 'autoplay';
                     
                     if (urls.length > 1) {
-                        ifr.style.minWidth = '80%';
+                        ifr.style.minWidth = '85%';
                         ifr.style.flexShrink = '0';
                     }
                     
                     wrapper.appendChild(ifr);
                 });
                 
-                iframeBox.appendChild(wrapper);
+                carouselContainer.appendChild(wrapper);
+                iframeBox.appendChild(carouselContainer);
             } else {
                 iframeBox.style.display = 'none';
                 iframeBox.innerHTML = '';
