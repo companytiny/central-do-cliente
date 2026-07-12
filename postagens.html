@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Marketing e Público-alvo | Tiny Creative</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- tsParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0e0e0e;
+            --text-main: #f3f3f3;
+            --text-muted: #a0a0a0;
+            --accent-light: #a2d149;
+            --accent-base: #75a823;
+            --accent-dark: #2a3b0d;
+            --gray-dark: #4a4a4a;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --border-color: rgba(74, 74, 74, 0.4);
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle Container */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 9999;
+            display: none; /* DESLIGADO TEMPORARIAMENTE PARA DESENVOLVIMENTO */
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .login-logo {
+            max-height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .login-box h2 {
+            font-family: var(--font-heading);
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .login-box p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .login-box input:focus {
+            border-color: var(--accent-base);
+        }
+        
+        #content-wrapper {
+            display: block; /* Forçado para aparecer */
+            opacity: 1; /* Forçado para aparecer */
+            transition: opacity 0.5s ease;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(14,14,14,0.9) 0%, rgba(14,14,14,0) 100%);
+        }
+
+        .logo-link img {
+            max-height: 50px;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-top: 15px;
+            display: block;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        /* Sections */
+        .section-block {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-base);
+            transition: width 0.3s ease;
+        }
+
+        .section-block:hover .section-header h2::after {
+            width: 80px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '✦';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: var(--accent-base);
+            font-size: 1.2rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-base);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(117, 168, 35, 0.15);
+        }
+
+        .card:hover::before {
+            color: var(--accent-light);
+            transform: scale(1.3) rotate(20deg);
+        }
+
+        .card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-left: 30px;
+            color: var(--text-main);
+        }
+
+        .card-content {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card-content strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .field-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .field-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* Span to highlight data that is replaced from template */
+        .template-data {
+            color: var(--text-main);
+        }
+
+        /* Lists */
+        .styled-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .styled-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        .styled-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-base);
+            font-size: 1.5rem;
+            line-height: 1;
+            top: -4px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 35px;
+            background-color: transparent;
+            color: var(--accent-light);
+            border: 1px solid var(--accent-base);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-base);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(117, 168, 35, 0.2);
+        }
+
+        .btn-primary svg {
+            margin-left: 12px;
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(6px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 80px;
+        }
+        
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title h1 {
+                font-size: 2.5rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 30px 20px;
+            }
+        }
+
+        #custom-alert-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 20000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
+        }
+        .custom-alert-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .custom-alert-box p {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+    
+        .guided-category-btn {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--accent-base);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        .guided-category-btn:hover {
+            background: var(--accent-base);
+            color: var(--bg-color);
+        }
+        
+    </style>
+
+    <!-- Supabase & FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales-all.global.min.js"></script>
+    
+    <style>
+        /* Navbar */
+        .top-nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-btn.active, .nav-btn:hover {
+            border-color: var(--accent-base);
+            color: var(--accent-light);
+            background: rgba(117, 168, 35, 0.1);
+        }
+
+        /* Tabs */
+        .tab-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        
+        
+        
+        .stat-card.approved-card {
+            border: 1px solid rgba(46, 204, 113, 0.5);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.15);
+        }
+        .stat-card.pending-card {
+            border: 1px solid rgba(243, 156, 18, 0.5); 
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.15);
+        }
+        .stat-card.revision-card {
+            border: 1px solid rgba(52, 152, 219, 0.5);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.15);
+        }
+
+        .stat-card { position: relative; z-index: 1; }
+        .stat-card:hover { z-index: 10; }
+        
+        /* Animated Urgent Card & Tooltip */
+        .stat-card.urgent {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid rgba(243, 156, 18, 0.5); 
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.15);
+        }
+        .stat-card.urgent:hover {
+            z-index: 10;
+        }
+        .stat-card.urgent .stat-icon {
+            position: relative;
+        }
+        .stat-card.urgent .stat-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45px; height: 45px;
+            background: rgba(243, 156, 18, 0.5);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            font-size: 11px;
+            margin-left: 6px;
+            cursor: pointer;
+            position: relative;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+        .tooltip-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2a2c35;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #3f4254;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            font-family: var(--font-body);
+            font-weight: normal;
+        }
+        .tooltip-icon:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: 130%;
+        }
+
+        /* Dashboard Stats */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-family: var(--font-heading);
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-icon {
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+        .icon-green { color: #2ecc71; }
+        .icon-yellow { color: #f39c12; }
+        .icon-red { color: #e74c3c; }
+        .icon-blue { color: #3498db; }
+
+        @media (max-width: 768px) {
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Calendar */
+        .calendar-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 40px;
+            color: var(--text-main);
+        }
+        .fc-theme-standard td, .fc-theme-standard th {
+            border-color: var(--border-color);
+        }
+        .fc-theme-standard .fc-scrollgrid {
+            border-color: var(--border-color);
+        }
+        .fc .fc-toolbar-title {
+            color: var(--text-main);
+            font-family: var(--font-heading);
+        }
+        .fc .fc-button-primary {
+            background-color: transparent;
+            border-color: var(--border-color);
+            color: var(--text-main);
+        }
+        .fc .fc-button-primary:not(:disabled):active, 
+        .fc .fc-button-primary:not(:disabled).fc-button-active,
+        .fc .fc-button-primary:hover {
+            background-color: var(--accent-base);
+            border-color: var(--accent-base);
+            color: var(--bg-color);
+        }
+        .fc-daygrid-day-number {
+            color: var(--text-main);
+        }
+
+        /* Modal */
+        #custom-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .custom-modal {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 95vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .custom-modal h3 {
+            font-family: var(--font-heading);
+            margin-bottom: 15px;
+            color: var(--accent-light);
+        }
+        .custom-modal p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .modal-iframe-container {
+            width: 100%;
+            height: 450px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+        }
+        .modal-iframe-container iframe {
+            width: 100%; height: 100%; border: none;
+        }
+        .modal-textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: var(--font-body);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        .btn-approve {
+            background-color: var(--accent-base);
+            color: var(--bg-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-reject {
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-close-modal {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+        }
+
+        #custom-alert-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 20000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
+        }
+        .custom-alert-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .custom-alert-box p {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+    
+        .guided-category-btn {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--accent-base);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        .guided-category-btn:hover {
+            background: var(--accent-base);
+            color: var(--bg-color);
+        }
+        
+    </style>
+    
+</head>
+<body>
+    <div id="tsparticles"></div>
+
+    <!-- Main Content Wrapper -->
+    <div id="content-wrapper">
+        
+        <header>
+            <a href="#" class="logo-link">
+                <img src="https://www.dropbox.com/scl/fi/tr7x6hkhvh3juvhzo49cp/02_TINY_BRANCA.png?rlkey=4p9yyohwjzfyvaj634nfeh5ug&st=qqhbw1mw&raw=1" alt="Tiny Creative">
+            </a>
+            <span class="logo-sub">Central do Cliente</span>
+            <nav class="top-nav">
+                <a href="index.html" class="nav-btn" style="text-decoration:none;">Estratégia de marketing</a>
+                <a href="postagens.html" class="nav-btn active" style="text-decoration:none;">Aprovação de postagens</a>
+                <a href="criativos.html" class="nav-btn" style="text-decoration:none;">Aprovação de criativos</a>
+            </nav>
+        </header>
+    
+
+        <main>
+            <div id="tab-postagens" class="tab-content">
+                <div class="page-title">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0;">Aprovação de Postagens</h1>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Confira o cronograma e aprove os briefings.</p>
+                </div>
+                
+                
+                
+
+                <!-- Dashboard de Métricas -->
+                <div class="dashboard-stats-wrapper" style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 25px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                    <div class="dashboard-stats" id="dashboard-strip">
+                    <div class="stat-card approved-card">
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-approved">0</span>
+                            <span class="stat-label">Aprovados<br><span style="font-size:0.75rem;text-transform:none;opacity:0.8;">Cards verdes</span></span>
+                        </div>
+                        <div class="stat-icon icon-green">🟢</div>
+                    </div>
+                    <div class="stat-card pending-card">
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-pending">0</span>
+                            <span class="stat-label">Aprovações Pendentes <span class="tooltip-icon" data-tooltip="Postagens que precisam da sua aprovação, elas estão na cor amarela no calendário.">?</span><br><span style="font-size:0.75rem;text-transform:none;opacity:0.8;">Cards amarelos</span></span>
+                        </div>
+                        <div class="stat-icon icon-yellow">🟡</div>
+                    </div>
+                    <div class="stat-card revision-card">
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-revision">0</span>
+                            <span class="stat-label">Em Alteração <span class="tooltip-icon" data-tooltip="Cards azuis estão em alteração interna da equipe da Tiny.">?</span><br><span style="font-size:0.75rem;text-transform:none;opacity:0.8;">Cards azuis</span></span>
+                        </div>
+                        <div class="stat-icon icon-blue">🔵</div>
+                    </div>
+                </div>
+                </div>
+
+                <div style="text-align:center; margin-bottom: 80px; margin-top: 20px;">
+                    <p style="color:var(--text-muted); font-size:1.1rem; margin-bottom:15px; font-family:var(--font-heading);">Quer simplificar as suas aprovações pendentes?</p>
+                    <button onclick="checkGuidedApproval()" class="btn-primary" style="font-family:var(--font-heading);">Iniciar Aprovação Guiada</button>
+                </div>
+
+                <div class="calendar-container">
+                    <div id="calendar-postagens"></div>
+                </div>
+            
+            
+            </div>
+
+            
+            </div>
+            
+        </main>
+        
+        <!-- Interactive Modal -->
+        <div id="custom-modal-overlay">
+            <div class="custom-modal">
+
+        <!-- Progresso e Pular -->
+        <div id="guided-header" style="display:none; flex-direction:column; gap:10px; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--border-color);">
+            <div style="display:flex; justify-content:center; align-items:center;">
+                <span id="guided-progress-text" style="color:var(--text-main); font-family:var(--font-heading); font-size:1.1rem; font-weight:600;">Aprovando: 1 de 5</span>
+            </div>
+            <div style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden;">
+                <div id="guided-progress-fill" style="width:20%; height:100%; background:var(--accent-base); transition:width 0.4s ease;"></div>
+            </div>
+        </div>
+
+                <button class="btn-close-modal" onclick="closeModal()">×</button>
+                <h3 id="modal-title">Título do Post</h3>
+                <div id="modal-etapa-badge" style="display:none; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold; color:#fff; margin-bottom:15px; margin-top:-5px; letter-spacing:0.5px; width:fit-content;"></div>
+                <div id="modal-tabs-container" style="display:flex; gap:10px; margin-bottom:10px;">
+                    <button id="tab-legenda" style="padding:6px 12px; border:none; background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Texto / Legenda</button>
+                    <button id="tab-briefing" style="padding:6px 12px; border:1px solid var(--border-color); background:transparent; color:var(--text-main); border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Briefing Original</button>
+                </div>
+                <div id="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; max-height:200px; overflow-y:auto; white-space:pre-wrap;">
+                    <p id="modal-desc" style="margin:0; font-size:14px; line-height:1.5;"></p>
+                    <p id="modal-desc-briefing" style="margin:0; font-size:14px; line-height:1.5; display:none;"></p>
+                </div>
+                
+                <div class="modal-iframe-container" id="modal-iframe-box">
+                </div>
+                
+                <textarea class="modal-textarea" id="modal-comment" placeholder="Adicione um comentário ou solicite ajustes..."></textarea>
+                <div id="modal-historico" style="display:none; color:var(--text-muted); font-size:0.95rem; margin-top:10px; padding:15px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05);"></div>
+                
+                <div id="modal-actions-guided" class="modal-actions" style="display:none; flex-direction: column; gap:15px; margin-top:20px;">
+                    <div id="guided-primary-buttons" style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
+                        <button class="btn-secondary" onclick="skipGuidedItem()" style="background:#3f4254; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:600;">Pular aprovação desse material</button>
+                        <button class="btn-reject" onclick="toggleGuidedAdjust(true)">Solicitar Ajuste</button>
+                        <button class="btn-approve" onclick="handleAction('Aprovar')">Aprovar Sem Alterações</button>
+                    </div>
+                    <div id="guided-adjust-buttons" style="display:none; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
+                        <button class="btn-secondary" onclick="toggleGuidedAdjust(false)" style="background:#3f4254; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:600;">Cancelar Solicitação</button>
+                        <button class="btn-reject" onclick="handleAction('Pedir Ajuste')">Enviar Solicitação de Ajuste</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Custom Alert Modal -->
+        <div id="custom-alert-overlay">
+            <div class="custom-alert-box">
+                <p id="custom-alert-message"></p>
+                <div class="modal-actions" style="justify-content: center; gap: 10px;">
+                    <button class="btn-approve" id="alert-btn-ok" onclick="closeAlert()">OK</button>
+                    <button class="btn-reject" id="alert-btn-cancel" style="display:none;" onclick="closeAlert()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-overlay">Processando...</div>
+    
+
+        <footer>
+            <p>&copy; 2026 Tiny Creative. Modelo de Pesquisa e Planejamento.</p>
+        </footer>
+    </div>
+
+    <!-- SPA, Supabase, Calendar & Webhook Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="database.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Checar se o Supabase tá ativo e o usuário tá logado
+            if (window.supabaseClient) {
+                const { data: { session } } = await window.supabaseClient.auth.getSession();
+                if (!session) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                // Exibir botão de logout no header
+                const topBar = document.querySelector('.top-bar-right');
+                if (topBar) {
+                    const logoutBtn = document.createElement('button');
+                    logoutBtn.innerText = 'Sair';
+                    logoutBtn.className = 'btn-secondary';
+                    logoutBtn.style.padding = '8px 15px';
+                    logoutBtn.style.marginLeft = '15px';
+                    logoutBtn.onclick = () => window.logOut();
+                    topBar.appendChild(logoutBtn);
+                }
+            }
+
+            // Buscar dados reais do Supabase
+            if (typeof window.fetchRealData === 'function') {
+                await window.fetchRealData();
+            }
+
+            // Checar Aprovação Guiada após os dados chegarem
+            if (!sessionStorage.getItem('guidedWelcomeShown') || sessionStorage.getItem('resumeGuidedWelcome')) {
+                sessionStorage.removeItem('resumeGuidedWelcome');
+                checkGuidedApproval();
+            }
+
+            const mockDatabase = window.mockDatabase || [];
+            let postagens = mockDatabase;
+            
+            if (typeof calendars !== 'undefined' && calendars.postagens) {
+                calendars.postagens.removeAllEvents();
+                const fakeEvents = postagens.map(p => ({
+                    id: String(p.id),
+                    title: p.titulo,
+                    start: p.data,
+                    extendedProps: { ...p }
+                }));
+                calendars.postagens.addEventSource(fakeEvents);
+                if (typeof updateDashboard === 'function') updateDashboard(window.mockDatabase);
+            }
+        });
+
+        let isGuidedMode = false;
+        let guidedQueue = [];
+        let guidedCategory = '';
+        window.currentGuidedIndex = 0;
+
+        function checkGuidedApproval() {
+            if (!window.mockDatabase) return;
+            const contextData = window.mockDatabase; // Todas as pendências
+            let countBriefing = 0, countPost = 0, countBriefingCriativo = 0, countCriativo = 0;
+            contextData.forEach(item => {
+                const etapa = (item.etapa || '').toUpperCase();
+                const tag = (item.tag || '').toUpperCase();
+                const isPendente = (item.status || '').toUpperCase().includes('PENDENTE') || (item.status || '').toUpperCase().includes('APROVAÇÃO');
+                
+                if (isPendente) {
+                    if (tag.includes('MÍDIAS SOCIAIS')) {
+                        if (etapa.includes('APROVAÇÃO DO CLIENTE (BRIEFING)')) countBriefing++;
+                        if (etapa.includes('APROVAÇÃO DO CLIENTE (FINAL)')) countPost++;
+                    }
+                    if (tag.includes('TRÁFEGO PAGO')) {
+                        if (etapa.includes('APROVAÇÃO DO CLIENTE (BRIEFING)')) {
+                            countBriefingCriativo++;
+                        }
+                        if (etapa.includes('APROVAÇÃO DO CLIENTE (FINAL)')) countCriativo++;
+                    }
+                }
+            });
+
+            const total = countBriefing + countPost + countBriefingCriativo + countCriativo;
+            const optionsDiv = document.getElementById('guided-options');
+            if(!optionsDiv) return;
+            
+            if (total === 0) {
+                optionsDiv.innerHTML = '<p style="color:var(--text-main); text-align:center; font-size:1.1rem; line-height:1.5;">Parabéns, todos os conteúdos estão aprovados ou em alteração!<br><br><span style="color:var(--text-muted); font-size:0.95rem;">Caso chegue algum novo conteúdo para você, enviaremos um e-mail.</span></p>';
+                document.getElementById('guided-overlay').style.display = 'flex';
+                return;
+            }
+
+            optionsDiv.innerHTML = '';
+            
+            if (countPost > 0) {
+                optionsDiv.innerHTML += `<button onclick="startGuidedMode('POST')" class="guided-category-btn">Você tem ${countPost} Posts para aprovar</button>`;
+            }
+            if (countBriefing > 0) {
+                optionsDiv.innerHTML += `<button onclick="startGuidedMode('BRIEFING')" class="guided-category-btn">Você tem ${countBriefing} Briefings Orgânicos</button>`;
+            }
+            if (countCriativo > 0) {
+                optionsDiv.innerHTML += `<button onclick="startGuidedMode('CRIATIVO')" class="guided-category-btn">Você tem ${countCriativo} Criativos para aprovar</button>`;
+            }
+            if (countBriefingCriativo > 0) {
+                optionsDiv.innerHTML += `<button onclick="startGuidedMode('BRIEFING_CRIATIVO')" class="guided-category-btn">Você tem ${countBriefingCriativo} Briefings de Criativos</button>`;
+            }
+
+            document.getElementById('guided-overlay').style.display = 'flex';
+        }
+
+        function closeGuidedWelcome() {
+            sessionStorage.setItem('guidedWelcomeShown', 'true');
+            document.getElementById('guided-overlay').style.display = 'none';
+        }
+
+        function startGuidedMode(category) {
+            closeGuidedWelcome();
+            isGuidedMode = true;
+            guidedCategory = category;
+            
+            let targetEtapa = '';
+            let targetTag = '';
+            if (category === 'POST') { targetEtapa = 'APROVAÇÃO DO CLIENTE (FINAL)'; targetTag = 'MÍDIAS SOCIAIS'; }
+            if (category === 'BRIEFING') { targetEtapa = 'APROVAÇÃO DO CLIENTE (BRIEFING)'; targetTag = 'MÍDIAS SOCIAIS'; }
+            if (category === 'CRIATIVO') { targetEtapa = 'APROVAÇÃO DO CLIENTE (FINAL)'; targetTag = 'TRÁFEGO PAGO'; }
+            if (category === 'BRIEFING_CRIATIVO') { targetEtapa = 'APROVAÇÃO DO CLIENTE (BRIEFING)'; targetTag = 'TRÁFEGO PAGO'; }
+
+            const contextData = window.mockDatabase;
+            guidedQueue = contextData.filter(i => {
+                const etapa = (i.etapa || '').toUpperCase();
+                const tag = (i.tag || '').toUpperCase();
+                const isPendente = (i.status || '').toUpperCase().includes('PENDENTE') || (i.status || '').toUpperCase().includes('APROVAÇÃO');
+                
+                if (isPendente && etapa.includes(targetEtapa) && tag.includes(targetTag)) {
+                    if (category === 'BRIEFING_CRIATIVO' && tag.includes('MÍDIAS SOCIAIS')) return false;
+                    return true;
+                }
+                return false;
+            });
+            
+            guidedQueue.sort((a, b) => new Date(a.data) - new Date(b.data));
+            
+            if (guidedQueue.length > 0) {
+                openGuidedItem(0);
+            }
+        }
+
+        
+        function skipGuidedItem() {
+            if (typeof isGuidedMode !== 'undefined' && isGuidedMode) {
+                setTimeout(() => openGuidedItem(window.currentGuidedIndex + 1), 200);
+            } else {
+                closeModal();
+            }
+        }
+    
+        
+        function toggleGuidedAdjust(show) {
+            document.getElementById('modal-comment').style.display = show ? 'block' : 'none';
+            document.getElementById('guided-primary-buttons').style.display = show ? 'none' : 'flex';
+            document.getElementById('guided-adjust-buttons').style.display = show ? 'flex' : 'none';
+            if(show) {
+                document.getElementById('modal-comment').focus();
+            } else {
+                document.getElementById('modal-comment').value = '';
+            }
+        }
+        
+        function openGuidedItem(index) {
+            if (index >= guidedQueue.length) {
+                // Tela de Loading Animada
+                document.getElementById('guided-header').style.display = 'none';
+                document.getElementById('modal-title').style.display = 'none';
+                document.getElementById('modal-desc').style.display = 'none';
+                document.getElementById('modal-iframe-box').style.display = 'none';
+                document.getElementById('modal-comment').style.display = 'none';
+                document.getElementById('modal-actions-guided').style.display = 'none';
+                
+                let loadingEl = document.getElementById('guided-loading-spinner');
+                if(!loadingEl) {
+                    loadingEl = document.createElement('div');
+                    loadingEl.id = 'guided-loading-spinner';
+                    loadingEl.innerHTML = '<div style="font-size:3rem; margin-bottom:20px; animation: spin 1.5s linear infinite;">🔄</div><h3 style="color:var(--text-main); font-family:var(--font-heading);">Carregando aprovações pendentes...</h3>';
+                    loadingEl.style = "text-align:center; padding: 20px; overflow: hidden;"; document.querySelector('.custom-modal').style.overflow = 'hidden';
+                    document.querySelector('.custom-modal').appendChild(loadingEl);
+                    
+                    const style = document.createElement('style');
+                    style.innerHTML = '@keyframes spin { 100% { transform: rotate(360deg); } }';
+                    document.head.appendChild(style);
+                }
+                loadingEl.style.display = 'block';
+
+                setTimeout(() => {
+                    loadingEl.style.display = 'none';
+                    isGuidedMode = false;
+                    closeModal();
+                    if (typeof updateDashboard === 'function') updateDashboard();
+                    setTimeout(checkGuidedApproval, 500); // Retorna para a tela de escolhas sem recarregar a página
+                }, 2000);
+                return;
+            }
+            
+            document.getElementById('guided-header').style.display = 'flex';
+            let label = 'do item';
+            if (guidedCategory === 'POST') label = 'do post';
+            if (guidedCategory === 'BRIEFING') label = 'do briefing';
+            if (guidedCategory === 'CRIATIVO') label = 'do criativo';
+            if (guidedCategory === 'BRIEFING_CRIATIVO') label = 'do briefing de criativo';
+
+            document.getElementById('guided-progress-text').innerText = `Aprovação ${label} ${index + 1} de ${guidedQueue.length}`;
+            
+            document.getElementById('guided-progress-fill').style.width = `${((index + 1) / guidedQueue.length) * 100}%`;
+            
+            
+            const item = guidedQueue[index];
+            const fakeEvent = {
+                id: item.id,
+                title: item.titulo,
+                extendedProps: { ...item }
+            };
+            
+            window.currentGuidedIndex = index;
+            openModal(fakeEvent);
+        }
+
+        let currentUser = null;
+        let calendars = {};
+        let currentEventId = null;
+        let currentPostType = null;
+
+        // ==========================================
+        // INIT APP
+        // ==========================================
+        currentUser = { id: 'dev', email: 'dev@tiny.com' };
+        
+        window.onload = function() {
+            const content = document.getElementById('content-wrapper');
+            content.style.display = 'block';
+            content.style.opacity = '1';
+            initCalendars();
+        };
+
+        
+
+        // ==========================================
+        // CALENDAR INIT & DATA FETCHING
+        // ==========================================
+        async function initCalendars() {
+            if (calendars.postagens) return; // already initialized
+
+            let postagens = window.mockDatabase || [];
+
+
+
+            // Mapeamento de cores
+            // Aprovar Briefing = #f39c12 (amarelo)
+            // Aprovar Criativo = #3498db (azul)
+            // Aprovado = #2ecc71 (verde)
+            // Pedido Ajuste = #e74c3c (vermelho)
+            
+            const getEventColor = (status) => {
+                const s = (status || '').toLowerCase();
+                if (s.includes('aprovado') || s.includes('concluído')) return 'rgba(46, 204, 113, 0.25)'; // verde transparente
+                if (s.includes('correção') || s.includes('ajuste') || s.includes('alteração')) return '#3498db'; // azul
+                if (s.includes('aprovação') || s.includes('pendente')) return '#f39c12'; // amarelo
+                return 'var(--accent-base)'; // verde padrão
+            };
+
+            const events = postagens.map(p => ({
+                id: p.id,
+                title: p.titulo || 'Post sem título',
+                start: p.data, // Assumindo formato YYYY-MM-DD
+                backgroundColor: getEventColor(p.status),
+                  textColor: p.status.toLowerCase().includes('aprovado') ? 'rgba(255,255,255,0.4)' : '#ffffff',
+                borderColor: getEventColor(p.status),
+                extendedProps: {
+                    status: p.status,
+                    tag: p.tag || '',
+                    texto_briefing: p.texto_briefing || '',
+                    texto_criativo: p.texto_criativo || '',
+                    url_postagem: p.url_postagem || ''
+                }
+            }));
+
+            // Filter for postagens tab (e.g. Briefing)
+            
+            // Filtro por tag da Ummense
+            const eventsFiltered = events.filter(e => (e.extendedProps.tag || '').toUpperCase().includes('MÍDIAS SOCIAIS'));
+    
+            // Filter for criativos tab (e.g. Criativo ou Aprovado)
+            
+
+            const commonConfig = {
+                initialView: 'dayGridMonth',
+                locale: 'pt-br',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth'
+                },
+                buttonText: {
+                    today: 'Hoje',
+                    month: 'Mês',
+                    
+                },
+                eventClick: function(info) {
+                    openModal(info.event);
+                }
+            };
+
+            const calendarElPostagens = document.getElementById('calendar-postagens');
+            calendars.postagens = new FullCalendar.Calendar(calendarElPostagens, {
+                ...commonConfig,
+                events: eventsFiltered
+            });
+            calendars.postagens.render();
+
+            // Atualiza Dashboard
+            window.updateDashboard = () => {
+                const evts = (window.mockDatabase || []).filter(e => (e.tag || '').toUpperCase().includes('MÍDIAS SOCIAIS'));
+                let approved = 0;
+                let pending = 0;
+                let revision = 0;
+                
+                evts.forEach(e => {
+                    let st = (e.status || '').toLowerCase();
+                    
+                    if (st.includes('aprovado') || st.includes('concluído')) approved++;
+                    else if (st.includes('correção') || st.includes('ajuste') || st.includes('alteração')) revision++;
+                    else if (st.includes('aprovação') || st.includes('pendente')) pending++;
+                });
+                
+                const statApproved = document.getElementById('stat-approved');
+                if (statApproved) statApproved.innerText = approved;
+                const statPending = document.getElementById('stat-pending');
+                if (statPending) statPending.innerText = pending;
+                const statRevision = document.getElementById('stat-revision');
+                if (statRevision) statRevision.innerText = revision;
+            };
+            
+            window.updateDashboard();
+
+
+            
+            /*
+                ...commonConfig,
+                */
+            
+        }
+
+        // ==========================================
+        // MODAL & WEBHOOK LOGIC
+        // ==========================================
+        function openModal(event) {
+            currentEventId = event.id;
+            const props = event.extendedProps;
+            currentPostType = props.status;
+            
+            const modalComment = document.getElementById('modal-comment');
+            const mainActions = modalComment.nextElementSibling;
+            const modalHistorico = document.getElementById('modal-historico');
+            
+            let isPostContext = true;
+            if (typeof isGuidedMode !== 'undefined' && isGuidedMode) {
+                if (guidedCategory === 'CRIATIVO' || guidedCategory === 'BRIEFING_CRIATIVO') {
+                    isPostContext = false;
+                }
+            }
+
+            const etapaStr = (props.etapa || '').toUpperCase();
+            let currentAjuste = '';
+            
+            if (etapaStr.includes('BRIEFING')) {
+                currentAjuste = props.ajuste_briefing;
+            } else {
+                if (isPostContext) {
+                    currentAjuste = props.ajuste_postagem;
+                } else {
+                    currentAjuste = props.ajuste_criativo;
+                }
+            }
+            currentAjuste = currentAjuste || '';
+            
+            const isPendente = (props.status || '').toLowerCase().includes('pendente') || (props.status || '').toLowerCase().includes('aprovação');
+            
+            if (currentAjuste.trim() !== '') {
+                modalHistorico.style.display = 'block';
+                modalHistorico.innerHTML = '<strong>Texto do último pedido de ajuste enviado:</strong><br><br>' + currentAjuste;
+            } else {
+                modalHistorico.style.display = 'none';
+            }
+
+            if (isPendente) {
+                document.getElementById('modal-actions-guided').style.display = 'flex';
+                toggleGuidedAdjust(false);
+            } else {
+                document.getElementById('modal-actions-guided').style.display = 'none';
+                modalComment.style.display = 'none';
+            }
+
+            document.getElementById('modal-title').style.display = 'block';
+            document.getElementById('modal-desc').style.display = 'block';
+            document.getElementById('modal-iframe-box').style.display = 'block';
+            const loadingEl = document.getElementById('guided-loading-spinner');
+            if (loadingEl) loadingEl.style.display = 'none';
+            document.getElementById('modal-title').innerText = event.title;
+            const iframeBox = document.getElementById('modal-iframe-box');
+            
+            const tabLegenda = document.getElementById('tab-legenda');
+            const tabBriefing = document.getElementById('tab-briefing');
+            const descLegenda = document.getElementById('modal-desc');
+            const descBriefing = document.getElementById('modal-desc-briefing');
+            
+            if (isPostContext) {
+                descLegenda.innerText = props.texto_briefing || 'Sem texto de legenda disponível.';
+                tabLegenda.innerText = "Texto da Postagem";
+            } else {
+                descLegenda.innerText = props.texto_criativo || 'Sem texto de criativo disponível.';
+                tabLegenda.innerText = "Texto do Criativo";
+            }
+            
+            descBriefing.innerText = props.texto_descritivo || 'Sem briefing original disponível.';
+            
+            tabLegenda.onclick = () => {
+                tabLegenda.style.background = 'var(--primary)';
+                tabLegenda.style.color = '#fff';
+                tabLegenda.style.border = 'none';
+                tabBriefing.style.background = 'transparent';
+                tabBriefing.style.color = 'var(--text-main)';
+                tabBriefing.style.border = '1px solid var(--border-color)';
+                descLegenda.style.display = 'block';
+                descBriefing.style.display = 'none';
+            };
+            
+            tabBriefing.onclick = () => {
+                tabBriefing.style.background = 'var(--primary)';
+                tabBriefing.style.color = '#fff';
+                tabBriefing.style.border = 'none';
+                tabLegenda.style.background = 'transparent';
+                tabLegenda.style.color = 'var(--text-main)';
+                tabLegenda.style.border = '1px solid var(--border-color)';
+                descBriefing.style.display = 'block';
+                descLegenda.style.display = 'none';
+            };
+            
+            tabLegenda.click();
+
+            let urls = [];
+            if (isPostContext) {
+                if (Array.isArray(props.url_postagem)) urls = props.url_postagem;
+                else if (typeof props.url_postagem === 'string' && props.url_postagem.trim() !== '') {
+                    urls = props.url_postagem.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
+                }
+            } else {
+                if (Array.isArray(props.url_criativo)) urls = props.url_criativo;
+                else if (typeof props.url_criativo === 'string' && props.url_criativo.trim() !== '') {
+                    urls = props.url_criativo.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
+                }
+            }
+            
+            const badgeEtapa = document.getElementById('modal-etapa-badge');
+            if (badgeEtapa) {
+                badgeEtapa.style.display = 'inline-block';
+                const isBriefingView = (urls.length === 0);
+                badgeEtapa.innerText = isBriefingView ? "APROVAÇÃO DE BRIEFING" : "APROVAÇÃO DE MATERIAL FINAL";
+                badgeEtapa.style.background = isBriefingView ? "var(--secondary)" : "var(--primary)";
+            }
+
+            if (urls.length > 0) {
+                iframeBox.innerHTML = '';
+                if (urls.length > 1) {
+                    const titleEl = document.createElement('h3');
+                    titleEl.innerText = "Telas do carrossel ou variações do material:";
+                    titleEl.style.fontSize = '14px';
+                    titleEl.style.color = 'var(--text-muted)';
+                    titleEl.style.marginBottom = '10px';
+                    titleEl.style.fontWeight = '500';
+                    iframeBox.appendChild(titleEl);
+                }
+                urls.forEach(url => {
+                    let finalUrl = url;
+                    if (finalUrl.includes('drive.google.com/file/d/') && finalUrl.includes('/view')) {
+                        finalUrl = finalUrl.replace(/\/view.*$/, '/preview?rm=minimal');
+                    }
+                    const ifr = document.createElement('iframe');
+                    ifr.src = finalUrl;
+                    ifr.allow = "autoplay";
+                    ifr.style.width = urls.length > 1 ? '48%' : '100%';
+                    ifr.style.height = '100%';
+                    ifr.style.border = 'none';
+                    ifr.style.flexShrink = '0';
+                    ifr.style.borderRadius = '8px';
+                    iframeBox.appendChild(ifr);
+                });
+                iframeBox.style.display = 'flex';
+                iframeBox.style.gap = '10px';
+                iframeBox.style.overflowX = 'auto';
+            } else {
+                iframeBox.style.display = 'none';
+                iframeBox.innerHTML = '';
+            }
+
+            document.getElementById('modal-comment').value = '';
+            document.getElementById('custom-modal-overlay').style.display = 'flex';
+        }
+
+        function closeModal() { document.querySelector('.custom-modal').style.overflow = 'auto';
+            const gh = document.getElementById('guided-header');
+            if(gh) gh.style.display = 'none';
+            document.getElementById('custom-modal-overlay').style.display = 'none';
+            const iframeBox = document.getElementById('modal-iframe-box');
+            if(iframeBox) iframeBox.innerHTML = ''; // Limpa os iframes para parar vídeos
+        }
+
+        function showAlert(msg) {
+            document.getElementById('custom-alert-message').innerText = msg;
+            const btnOk = document.getElementById('alert-btn-ok');
+            const btnCancel = document.getElementById('alert-btn-cancel');
+            
+            btnCancel.style.display = 'none';
+            btnOk.innerText = 'OK';
+            btnOk.className = 'btn-approve';
+            btnOk.onclick = closeAlert;
+            
+            document.getElementById('custom-alert-overlay').style.display = 'flex';
+        }
+        
+        function showConfirm(msg, onConfirm) {
+            document.getElementById('custom-alert-message').innerText = msg;
+            const btnOk = document.getElementById('alert-btn-ok');
+            const btnCancel = document.getElementById('alert-btn-cancel');
+            
+            btnCancel.style.display = 'inline-block';
+            
+            btnOk.innerText = 'Descartar (Fechar)';
+            btnOk.className = 'btn-reject';
+            btnOk.onclick = function() {
+                closeAlert();
+                if (onConfirm) onConfirm();
+            };
+            
+            btnCancel.innerText = 'Manter (Não fechar)';
+            btnCancel.className = 'btn-approve';
+            btnCancel.onclick = closeAlert;
+            
+            document.getElementById('custom-alert-overlay').style.display = 'flex';
+        }
+
+        function closeAlert() {
+            document.getElementById('custom-alert-overlay').style.display = 'none';
+        }
+        
+        // Clicar fora do modal fecha ele (com checagem dupla)
+        window.addEventListener('click', function(event) {
+            const overlay = document.getElementById('custom-modal-overlay');
+            if (event.target === overlay) {
+                const comment = document.getElementById('modal-comment').value;
+                if (comment.trim() !== '') {
+                    showConfirm("Você escreveu um comentário, mas não salvou. Deseja descartar e fechar o card?", function() {
+                        closeModal();
+                    });
+                } else {
+                    closeModal();
+                }
+            }
+        });
+
+        async function handleAction(acao) {
+            const comment = document.getElementById('modal-comment').value;
+            const loader = document.getElementById('loading-overlay');
+            
+            if (acao === 'Pedir Ajuste' && !comment.trim()) {
+                showAlert("Por favor, adicione um comentário explicando o ajuste necessário.");
+                return;
+            }
+
+            loader.style.display = 'flex';
+
+            try {
+                // const response = await fetch...
+                await new Promise(r => setTimeout(r, 500));
+                const response = { ok: true };
+
+                if (response.ok) {
+                    const dbItem = window.mockDatabase.find(i => i.id == currentEventId);
+                    const newStatus = acao === 'Pedir Ajuste' ? '🔄 EM ALTERAÇÃO' : '✅ APROVADO';
+                    
+                    if (dbItem) {
+                        dbItem.status = newStatus;
+                        dbItem.historico_alteracao = comment;
+                    }
+                    
+                    if (window.supabaseClient) {
+                        await window.supabaseClient
+                            .from('conteudos')
+                            .update({ 
+                                status_cliente: newStatus,
+                                historico_alteracao: comment
+                            })
+                            .eq('id_ummense', String(currentEventId));
+                    }
+
+                    if (typeof calendars !== 'undefined' && calendars.postagens) {
+                        const evt = calendars.postagens.getEventById(String(currentEventId));
+                        if (evt) {
+                            evt.setExtendedProp('status', dbItem.status);
+                            let color = '#f39c12';
+                            if (dbItem.status.includes('APROVADO')) color = '#75a823';
+                            if (dbItem.status.includes('ALTERAÇÃO')) color = '#3498db';
+                            evt.setProp('backgroundColor', color);
+                            evt.setProp('borderColor', color);
+                        }
+                    }
+                    if (typeof updateDashboard === 'function') updateDashboard(window.mockDatabase);
+                    
+                    showAlert(`Ação "${acao}" enviada com sucesso!`);
+                    
+                    if (typeof isGuidedMode !== 'undefined' && isGuidedMode) {
+                        setTimeout(() => openGuidedItem(window.currentGuidedIndex + 1), 300);
+                    } else {
+                        closeModal();
+                    }
+                } else {
+                    showAlert("Erro ao enviar dados. Tente novamente.");
+                }
+            } catch (err) {
+                console.error("Erro webhook:", err);
+                showAlert("Erro de conexão com o servidor.");
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+        
+        // Fim da lógica do webhook
+    </script>
+
+
+    <!-- Init Particles -->
+    <script>
+        tsParticles.load("tsparticles", {
+            background: {
+                color: {
+                    value: "transparent",
+                },
+            },
+            particles: {
+                number: {
+                    value: 60,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: ["#a2d149", "#75a823", "#ffffff"]
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                move: {
+                    enable: true,
+                    speed: 0.6,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+
+    <!-- Guided Approval Overlay -->
+    <div class="guided-overlay" id="guided-overlay" style="display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999999;backdrop-filter:blur(5px);justify-content:center;align-items:center;">
+       <div class="guided-modal" style="background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:30px;max-width:500px;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+           <h2 style="margin-top:0;margin-bottom:15px;color:var(--text-main);font-family:var(--font-heading);">Aprovação Guiada</h2>
+           <p style="color:var(--text-muted);margin-bottom:25px;"></p>
+           
+           <div id="guided-options" style="display:flex;flex-direction:column;gap:10px;margin-bottom:25px;">
+           </div>
+           
+           <button onclick="closeGuidedWelcome()" style="background:transparent;border:1px solid var(--text-muted);color:var(--text-muted);padding:10px 20px;border-radius:8px;cursor:pointer;transition:all 0.3s;font-family:var(--font-heading);">Confirmar</button>
+       </div>
+    </div>
+
+
+        <!-- Timeout Overlay -->
+        <div id="timeout-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+            <div style="background: var(--card-bg); padding: 40px; border-radius: 12px; text-align: center; max-width: 500px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <h2 style="color:var(--text-main); margin-bottom:15px; font-family:var(--font-heading);">Tempo Expirado</h2>
+                <p style="color:var(--text-muted); margin-bottom:25px; line-height:1.5;">Percebemos que você está na página há muito tempo, atualize para ver novidades em relação ao status do material.</p>
+                <button class="btn-primary" onclick="window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();" style="width:100%;">Atualizar</button>
+            </div>
+        </div>
+        <script>
+            setTimeout(() => {
+                const overlay = document.getElementById('timeout-overlay');
+                if (overlay) overlay.style.display = 'flex';
+            }, 50 * 60 * 1000); // 50 minutos
+        </script>
+        
+</body>
+</html>
