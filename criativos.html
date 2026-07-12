@@ -913,10 +913,10 @@
                 <img src="https://www.dropbox.com/scl/fi/tr7x6hkhvh3juvhzo49cp/02_TINY_BRANCA.png?rlkey=4p9yyohwjzfyvaj634nfeh5ug&st=qqhbw1mw&raw=1" alt="Tiny Creative">
             </a>
             <span class="logo-sub">Central do Cliente</span>
-            <nav class="top-nav">
-                <a href="index.html" class="nav-btn" style="text-decoration:none;">Estratégia de marketing</a>
+            <nav class="top-nav" style="display: flex; gap: 15px; align-items: center;">
                 <a href="postagens.html" class="nav-btn" style="text-decoration:none;">Aprovação de postagens</a>
                 <a href="criativos.html" class="nav-btn active" style="text-decoration:none;">Aprovação de criativos</a>
+                <button onclick="localStorage.removeItem('client_id'); window.location.href='Index.html'" class="nav-btn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); cursor: pointer; padding: 10px 20px; text-decoration: none;">Sair</button>
             </nav>
         </header>
     
