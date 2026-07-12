@@ -1197,15 +1197,9 @@
                 title: p.titulo || 'Post sem título',
                 start: p.data, // Assumindo formato YYYY-MM-DD
                 backgroundColor: getEventColor(p.status),
-                  textColor: p.status.toLowerCase().includes('aprovado') ? 'rgba(255,255,255,0.4)' : '#ffffff',
+                textColor: p.status.toLowerCase().includes('aprovado') ? 'rgba(255,255,255,0.4)' : '#ffffff',
                 borderColor: getEventColor(p.status),
-                extendedProps: {
-                    status: p.status,
-                    tag: p.tag || '',
-                    texto_briefing: p.texto_briefing || '',
-                    texto_criativo: p.texto_criativo || '',
-                    url_postagem: p.url_postagem || ''
-                }
+                extendedProps: { ...p }
             }));
 
             // Filter for postagens tab (e.g. Briefing)
@@ -1293,10 +1287,24 @@
                 }
             }
 
-            const etapaStr = (props.etapa || '').toUpperCase();
+            let urls = [];
+            if (isPostContext) {
+                if (Array.isArray(props.url_postagem)) urls = props.url_postagem;
+                else if (typeof props.url_postagem === 'string' && props.url_postagem.trim() !== '') {
+                    urls = props.url_postagem.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
+                }
+            } else {
+                if (Array.isArray(props.url_criativo)) urls = props.url_criativo;
+                else if (typeof props.url_criativo === 'string' && props.url_criativo.trim() !== '') {
+                    urls = props.url_criativo.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
+                }
+            }
+            
+            const isBriefingView = (urls.length === 0);
+            
             let currentAjuste = '';
             
-            if (etapaStr.includes('BRIEFING')) {
+            if (isBriefingView) {
                 currentAjuste = props.ajuste_briefing;
             } else {
                 if (isPostContext) {
@@ -1371,23 +1379,9 @@
             
             tabLegenda.click();
 
-            let urls = [];
-            if (isPostContext) {
-                if (Array.isArray(props.url_postagem)) urls = props.url_postagem;
-                else if (typeof props.url_postagem === 'string' && props.url_postagem.trim() !== '') {
-                    urls = props.url_postagem.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
-                }
-            } else {
-                if (Array.isArray(props.url_criativo)) urls = props.url_criativo;
-                else if (typeof props.url_criativo === 'string' && props.url_criativo.trim() !== '') {
-                    urls = props.url_criativo.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
-                }
-            }
-            
             const badgeEtapa = document.getElementById('modal-etapa-badge');
             if (badgeEtapa) {
                 badgeEtapa.style.display = 'inline-block';
-                const isBriefingView = (urls.length === 0);
                 badgeEtapa.innerText = isBriefingView ? "APROVAÇÃO DE BRIEFING" : "APROVAÇÃO DE MATERIAL FINAL";
                 badgeEtapa.style.background = isBriefingView ? "var(--secondary)" : "var(--primary)";
             }

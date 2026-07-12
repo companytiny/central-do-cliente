@@ -1514,10 +1514,24 @@
                 }
             }
 
-            const etapaStr = (props.etapa || '').toUpperCase();
+            let urls = [];
+            if (isPostContext) {
+                if (Array.isArray(props.url_postagem)) urls = props.url_postagem;
+                else if (typeof props.url_postagem === 'string' && props.url_postagem.trim() !== '') {
+                    urls = props.url_postagem.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
+                }
+            } else {
+                if (Array.isArray(props.url_criativo)) urls = props.url_criativo;
+                else if (typeof props.url_criativo === 'string' && props.url_criativo.trim() !== '') {
+                    urls = props.url_criativo.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
+                }
+            }
+            
+            const isBriefingView = (urls.length === 0);
+            
             let currentAjuste = '';
             
-            if (etapaStr.includes('BRIEFING')) {
+            if (isBriefingView) {
                 currentAjuste = props.ajuste_briefing;
             } else {
                 if (isPostContext) {
@@ -1592,23 +1606,9 @@
             
             tabLegenda.click();
 
-            let urls = [];
-            if (isPostContext) {
-                if (Array.isArray(props.url_postagem)) urls = props.url_postagem;
-                else if (typeof props.url_postagem === 'string' && props.url_postagem.trim() !== '') {
-                    urls = props.url_postagem.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
-                }
-            } else {
-                if (Array.isArray(props.url_criativo)) urls = props.url_criativo;
-                else if (typeof props.url_criativo === 'string' && props.url_criativo.trim() !== '') {
-                    urls = props.url_criativo.split(/[,\n\r]+/).map(u => u.trim()).filter(u => u);
-                }
-            }
-            
             const badgeEtapa = document.getElementById('modal-etapa-badge');
             if (badgeEtapa) {
                 badgeEtapa.style.display = 'inline-block';
-                const isBriefingView = (urls.length === 0);
                 badgeEtapa.innerText = isBriefingView ? "APROVAÇÃO DE BRIEFING" : "APROVAÇÃO DE MATERIAL FINAL";
                 badgeEtapa.style.background = isBriefingView ? "var(--secondary)" : "var(--primary)";
             }
