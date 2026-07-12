@@ -877,7 +877,7 @@
                 <h3 id="modal-title">Título do Post</h3>
                 <div id="modal-etapa-badge" style="display:none; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold; color:#fff; margin-bottom:15px; margin-top:-5px; letter-spacing:0.5px; width:fit-content; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
                 <div id="modal-tabs-container" style="display:flex; gap:10px; margin-bottom:10px;">
-                    <button id="tab-legenda" style="padding:6px 12px; border:2px solid var(--accent-base); background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Texto / Legenda</button>
+                    <button id="tab-legenda" style="padding:6px 12px; border:2px solid var(--accent-base); background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Legenda</button>
                     <button id="tab-briefing" style="padding:6px 12px; border:1px solid var(--border-color); background:transparent; color:var(--text-main); border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Briefing</button>
                 </div>
                 <div id="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; max-height:200px; overflow-y:auto; white-space:pre-wrap;">
@@ -1347,37 +1347,64 @@
             
             if (isPostContext) {
                 descLegenda.innerText = props.texto_briefing || 'Sem texto de legenda disponível.';
-                tabLegenda.innerText = "Texto da Postagem";
             } else {
                 descLegenda.innerText = props.texto_criativo || 'Sem texto de criativo disponível.';
-                tabLegenda.innerText = "Texto do Criativo";
             }
             
             descBriefing.innerText = props.texto_descritivo || 'Sem briefing original disponível.';
             
-            tabLegenda.onclick = () => {
-                tabLegenda.style.background = 'var(--primary)';
-                tabLegenda.style.color = '#fff';
-                tabLegenda.style.border = '2px solid var(--accent-base)';
-                tabBriefing.style.background = 'transparent';
-                tabBriefing.style.color = 'var(--text-main)';
-                tabBriefing.style.border = '1px solid var(--border-color)';
-                descLegenda.style.display = 'block';
-                descBriefing.style.display = 'none';
-            };
+            let hasLegenda = false;
+            if (isPostContext) {
+                hasLegenda = !!(props.legenda_postagem && props.legenda_postagem.trim() !== '');
+            } else {
+                hasLegenda = !!(props.legenda_criativo && props.legenda_criativo.trim() !== '');
+            }
             
-            tabBriefing.onclick = () => {
-                tabBriefing.style.background = 'var(--primary)';
-                tabBriefing.style.color = '#fff';
-                tabBriefing.style.border = '2px solid var(--accent-base)';
-                tabLegenda.style.background = 'transparent';
-                tabLegenda.style.color = 'var(--text-main)';
-                tabLegenda.style.border = '1px solid var(--border-color)';
-                descBriefing.style.display = 'block';
-                descLegenda.style.display = 'none';
-            };
-            
-            tabLegenda.click();
+            if (!hasLegenda) {
+                tabLegenda.style.opacity = '0.5';
+                tabLegenda.style.cursor = 'not-allowed';
+                tabLegenda.onclick = (e) => { e.preventDefault(); };
+                
+                tabBriefing.onclick = () => {
+                    tabBriefing.style.background = 'var(--primary)';
+                    tabBriefing.style.color = '#fff';
+                    tabBriefing.style.border = '2px solid var(--accent-base)';
+                    tabLegenda.style.background = 'transparent';
+                    tabLegenda.style.color = 'var(--text-main)';
+                    tabLegenda.style.border = '1px solid var(--border-color)';
+                    descBriefing.style.display = 'block';
+                    descLegenda.style.display = 'none';
+                };
+                
+                tabBriefing.click();
+            } else {
+                tabLegenda.style.opacity = '1';
+                tabLegenda.style.cursor = 'pointer';
+                
+                tabLegenda.onclick = () => {
+                    tabLegenda.style.background = 'var(--primary)';
+                    tabLegenda.style.color = '#fff';
+                    tabLegenda.style.border = '2px solid var(--accent-base)';
+                    tabBriefing.style.background = 'transparent';
+                    tabBriefing.style.color = 'var(--text-main)';
+                    tabBriefing.style.border = '1px solid var(--border-color)';
+                    descLegenda.style.display = 'block';
+                    descBriefing.style.display = 'none';
+                };
+                
+                tabBriefing.onclick = () => {
+                    tabBriefing.style.background = 'var(--primary)';
+                    tabBriefing.style.color = '#fff';
+                    tabBriefing.style.border = '2px solid var(--accent-base)';
+                    tabLegenda.style.background = 'transparent';
+                    tabLegenda.style.color = 'var(--text-main)';
+                    tabLegenda.style.border = '1px solid var(--border-color)';
+                    descBriefing.style.display = 'block';
+                    descLegenda.style.display = 'none';
+                };
+                
+                tabLegenda.click();
+            }
 
             const badgeEtapa = document.getElementById('modal-etapa-badge');
             if (badgeEtapa) {

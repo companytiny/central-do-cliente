@@ -72,6 +72,8 @@ window.fetchRealData = async () => {
             texto_descritivo: c.texto_descritivo,
             texto_briefing: c.legenda_postagem || c.texto_descritivo,
             texto_criativo: c.legenda_criativo || c.texto_descritivo,
+            legenda_postagem: c.legenda_postagem,
+            legenda_criativo: c.legenda_criativo,
             url_postagem: postagemUrls.length > 0 ? postagemUrls : fallbackUrls, // Array
             url_criativo: criativoUrls.length > 0 ? criativoUrls : fallbackUrls, // Array
             historico_alteracao: c.historico_alteracao,
