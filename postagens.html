@@ -800,7 +800,7 @@
             <nav class="top-nav" style="display: flex; gap: 15px; align-items: center;">
                 <a href="postagens.html" class="nav-btn active" style="text-decoration:none;">Aprovação de postagens</a>
                 <a href="criativos.html" class="nav-btn" style="text-decoration:none;">Aprovação de criativos</a>
-                <button onclick="localStorage.removeItem('client_id'); window.location.href='Index.html'" class="nav-btn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); cursor: pointer; padding: 10px 20px; text-decoration: none;">Sair</button>
+                <button onclick="localStorage.removeItem('client_id'); window.location.href='index.html'" class="nav-btn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); cursor: pointer; padding: 10px 20px; text-decoration: none;">Sair</button>
             </nav>
         </header>
     
@@ -1660,86 +1660,7 @@
     </script>
 
 
-    <!-- Init Particles -->
-    <script>
-        tsParticles.load("tsparticles", {
-            background: {
-                color: {
-                    value: "transparent",
-                },
-            },
-            particles: {
-                number: {
-                    value: 60,
-                    density: {
-                        enable: true,
-                        value_area: 800
-                    }
-                },
-                color: {
-                    value: ["#a2d149", "#75a823", "#ffffff"]
-                },
-                shape: {
-                    type: "circle"
-                },
-                opacity: {
-                    value: 0.5,
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 1,
-                        opacity_min: 0.1,
-                        sync: false
-                    }
-                },
-                size: {
-                    value: 3,
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 2,
-                        size_min: 0.1,
-                        sync: false
-                    }
-                },
-                move: {
-                    enable: true,
-                    speed: 0.6,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false,
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: "grab"
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: "push"
-                    },
-                    resize: true
-                },
-                modes: {
-                    grab: {
-                        distance: 140,
-                        line_linked: {
-                            opacity: 1
-                        }
-                    },
-                    push: {
-                        particles_nb: 4
-                    }
-                }
-            },
-            retina_detect: true
-        });
-    </script>
+
 
     <!-- Guided Approval Overlay -->
     <div class="guided-overlay" id="guided-overlay" style="display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999999;backdrop-filter:blur(5px);justify-content:center;align-items:center;">
