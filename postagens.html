@@ -800,7 +800,7 @@
             <nav class="top-nav" style="display: flex; gap: 15px; align-items: center;">
                 <a href="postagens.html" class="nav-btn active" style="text-decoration:none;">Aprovação de postagens</a>
                 <a href="criativos.html" class="nav-btn" style="text-decoration:none;">Aprovação de criativos</a>
-                <button onclick="localStorage.removeItem('client_id'); window.location.href='index.html'" class="nav-btn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); cursor: pointer; padding: 10px 20px; text-decoration: none;">Sair</button>
+                <button onclick="openSwitchUserModal()" class="nav-btn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); cursor: pointer; padding: 10px 20px; text-decoration: none;">Trocar de Usuário</button>
             </nav>
         </header>
     
@@ -1684,11 +1684,89 @@
                 <button class="btn-primary" onclick="window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();" style="width:100%;">Atualizar</button>
             </div>
         </div>
+
+        <!-- Switch User Modal -->
+        <div id="switch-user-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+            <div style="background: var(--card-bg); padding: 40px; border-radius: 12px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative;">
+                <span onclick="closeSwitchUserModal()" style="position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer;">&times;</span>
+                <h2 style="color:var(--text-main); margin-bottom:10px; font-family:var(--font-heading);">Trocar de Usuário</h2>
+                <p style="color:var(--text-muted); margin-bottom:25px; font-size: 14px;">Acesse a plataforma com outra conta.</p>
+                
+                <form id="switch-user-form" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+                    <div>
+                        <label for="su-email" style="display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 14px;">E-mail</label>
+                        <input type="email" id="su-email" required placeholder="seu@email.com" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; outline: none; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label for="su-password" style="display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 14px;">Senha</label>
+                        <input type="password" id="su-password" required placeholder="••••••••" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; outline: none; box-sizing: border-box;">
+                    </div>
+                    
+                    <button type="submit" id="su-btn-submit" style="width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; position: relative;">
+                        <span id="su-btn-text">Entrar</span>
+                        <div id="su-btn-loader" style="display: none; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+                    </button>
+                    <div id="su-error-msg" style="display: none; color: #e74c3c; font-size: 14px; text-align: center; margin-top: 10px;">Email ou senha incorretos.</div>
+                </form>
+            </div>
+        </div>
+
         <script>
             setTimeout(() => {
                 const overlay = document.getElementById('timeout-overlay');
                 if (overlay) overlay.style.display = 'flex';
             }, 50 * 60 * 1000); // 50 minutos
+            
+            function openSwitchUserModal() {
+                document.getElementById('switch-user-modal').style.display = 'flex';
+                document.getElementById('su-email').value = '';
+                document.getElementById('su-password').value = '';
+                document.getElementById('su-error-msg').style.display = 'none';
+            }
+            
+            function closeSwitchUserModal() {
+                document.getElementById('switch-user-modal').style.display = 'none';
+            }
+            
+            document.getElementById('switch-user-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('su-email').value;
+                const password = document.getElementById('su-password').value;
+                
+                document.getElementById('su-btn-text').style.display = 'none';
+                document.getElementById('su-btn-loader').style.display = 'block';
+                document.getElementById('su-error-msg').style.display = 'none';
+                
+                try {
+                    // Desloga o usuário atual
+                    await window.supabaseClient.auth.signOut();
+                    
+                    // Tenta logar com o novo
+                    const { error } = await window.supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password,
+                    });
+                    
+                    if (error) throw error;
+                    
+                    // Sucesso: recarrega a página de forma transparente (sem sair da URL) para puxar os novos dados
+                    window.location.reload();
+                    
+                } catch (err) {
+                    document.getElementById('su-error-msg').innerText = 'Email ou senha incorretos.';
+                    document.getElementById('su-error-msg').style.display = 'block';
+                    document.getElementById('su-btn-text').style.display = 'block';
+                    document.getElementById('su-btn-loader').style.display = 'none';
+                }
+            });
+            
+            // Estilo para o loader
+            if (!document.getElementById('su-loader-style')) {
+                const style = document.createElement('style');
+                style.id = 'su-loader-style';
+                style.innerHTML = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+                document.head.appendChild(style);
+            }
         </script>
         
 </body>
