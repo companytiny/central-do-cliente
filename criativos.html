@@ -1850,7 +1850,37 @@
                                 historico_alteracao: comment
                             })
                             .eq('id_ummense', String(currentEventId));
+                            
+                        // Enviar notificação para o Make.com
+                        let categoria = "INDEFINIDO";
+                        if ((dbItem.tag || "").toUpperCase().includes("TRÁFEGO PAGO")) categoria = "TRÁFEGO PAGO";
+                        else if ((dbItem.tag || "").toUpperCase().includes("MÍDIAS SOCIAIS")) categoria = "MÍDIAS SOCIAIS";
+
+                        const prefixo_resposta = acao === 'Pedir Ajuste' ? "RESPOSTA: ALTERAÇÃO" : "RESPOSTA: APROVADO";
+                        const acao_curta = acao === 'Pedir Ajuste' ? "Ajustes" : "Aprovado";
+
+                        const payload = {
+                            titulo_original: dbItem.titulo,
+                            prefixo_resposta: prefixo_resposta,
+                            categoria: categoria,
+                            client_id: dbItem.client_id || localStorage.getItem('client_id'),
+                            cliente_nome: window.currentClientName || "Nome não cadastrado",
+                            comentario: comment || "",
+                            acao_curta: acao_curta,
+                            id_ummense: dbItem.id_ummense
+                        };
+
+                        try {
+                            fetch("https://app.ummense.com/incoming-webhook/92aedaed-ccf2-403c-aeff-a2675807897d", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(payload)
+                            });
+                        } catch (e) {
+                            console.error("Erro ao notificar Make:", e);
+                        }
                     }
+
                     try {
                         if (typeof window.renderGridCriativos === 'function') {
                             window.renderGridCriativos();

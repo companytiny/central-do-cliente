@@ -17,6 +17,24 @@ window.fetchRealData = async () => {
     const { data: { session } } = await window.supabaseClient.auth.getSession();
     if (!session) return [];
     
+    // Buscar o nome da empresa na tabela profiles
+    try {
+        const { data: profileData } = await window.supabaseClient
+            .from('profiles')
+            .select('company_name')
+            .eq('id', session.user.id)
+            .single();
+            
+        if (profileData && profileData.company_name) {
+            window.currentClientName = profileData.company_name;
+        } else {
+            window.currentClientName = "Nome não cadastrado";
+        }
+    } catch(e) {
+        window.currentClientName = "Nome não cadastrado";
+        console.error("[DEBUG] Erro ao buscar profile:", e);
+    }
+    
     // Buscar conteúdos desse usuário
     const { data: conteudos, error } = await window.supabaseClient
         .from('conteudos')
