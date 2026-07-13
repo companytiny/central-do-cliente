@@ -1826,6 +1826,24 @@
                 return;
             }
 
+            // Descobrir em qual coluna salvar o ajuste
+            let isPostContext = false;
+            if (typeof isGuidedMode !== 'undefined' && isGuidedMode) {
+                if (guidedCategory === 'POST' || guidedCategory === 'BRIEFING') {
+                    isPostContext = true;
+                }
+            }
+            let colunaAjuste = '';
+            if (currentPostType === 'BRIEFING') {
+                colunaAjuste = 'ajuste_briefing';
+            } else {
+                if (isPostContext) {
+                    colunaAjuste = 'ajuste_postagem';
+                } else {
+                    colunaAjuste = 'ajuste_criativo';
+                }
+            }
+
             loader.style.display = 'flex';
 
             try {
@@ -1840,15 +1858,19 @@
                     if (dbItem) {
                         dbItem.status = newStatus;
                         dbItem.historico_alteracao = comment;
+                        dbItem[colunaAjuste] = comment;
                     }
 
                     if (window.supabaseClient) {
+                        const updateData = { 
+                            status_cliente: newStatus,
+                            historico_alteracao: comment
+                        };
+                        updateData[colunaAjuste] = comment;
+
                         await window.supabaseClient
                             .from('conteudos')
-                            .update({ 
-                                status_cliente: newStatus,
-                                historico_alteracao: comment
-                            })
+                            .update(updateData)
                             .eq('id_ummense', String(currentEventId));
                             
                         // Enviar notificação para o Make.com
