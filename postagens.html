@@ -1661,6 +1661,7 @@
                             client_id: dbItem.client_id || localStorage.getItem('client_id'),
                             cliente_nome: window.currentClientName || "Nome não cadastrado",
                             comentario: comment || "",
+                            comentario_safe: (comment || "").replace(/\n/g, "\\n").replace(/\r/g, "").replace(/"/g, "\\\""),
                             acao_curta: acao_curta,
                             id_ummense: dbItem.id_ummense
                         };
