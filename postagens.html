@@ -1327,7 +1327,9 @@
                     if (html !== '') {
                         html += '<hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:15px 0;">';
                     }
-                    html += '<strong>Resposta da equipe:</strong><br><br>' + props.resposta_interna;
+                    html += '<div style="background: rgba(46, 204, 113, 0.1); border-left: 3px solid #2ecc71; padding: 12px; border-radius: 4px; margin-top: 10px; color: #e2e8f0;">';
+                    html += '<strong style="color: #2ecc71;">Resposta da equipe:</strong><br><br>' + props.resposta_interna;
+                    html += '</div>';
                 }
                 modalHistorico.innerHTML = html;
             } else {
