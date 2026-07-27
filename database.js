@@ -71,6 +71,7 @@ window.fetchRealData = async () => {
         const criativoUrls = parseLinks(c.link_criativo);
         // Fallback antigo caso links_arquivos venha
         const fallbackUrls = parseLinks(c.links_arquivos);
+        const referenciasUrls = parseLinks(c.referencias);
         
         let isoDate = c.data_postagem || '';
         if (isoDate.includes('/')) {
@@ -98,7 +99,8 @@ window.fetchRealData = async () => {
             ajuste_briefing: c.ajuste_briefing,
             ajuste_postagem: c.ajuste_postagem,
             ajuste_criativo: c.ajuste_criativo,
-            resposta_interna: c.resposta_interna
+            resposta_interna: c.resposta_interna,
+            referencias: referenciasUrls
         };
     });
     
