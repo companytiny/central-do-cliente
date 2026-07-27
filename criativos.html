@@ -1544,9 +1544,19 @@
             
             const isPendente = (props.status || '').toLowerCase().includes('pendente') || (props.status || '').toLowerCase().includes('aprovação');
             
-            if (currentAjuste.trim() !== '') {
+            if (currentAjuste.trim() !== '' || (props.resposta_interna && props.resposta_interna.trim() !== '')) {
                 modalHistorico.style.display = 'block';
-                modalHistorico.innerHTML = '<strong>Texto do último pedido de ajuste enviado:</strong><br><br>' + currentAjuste;
+                let html = '';
+                if (currentAjuste.trim() !== '') {
+                    html += '<strong>Texto do último pedido de ajuste enviado:</strong><br><br>' + currentAjuste;
+                }
+                if (props.resposta_interna && props.resposta_interna.trim() !== '') {
+                    if (html !== '') {
+                        html += '<hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:15px 0;">';
+                    }
+                    html += '<strong>Resposta da equipe:</strong><br><br>' + props.resposta_interna;
+                }
+                modalHistorico.innerHTML = html;
             } else {
                 modalHistorico.style.display = 'none';
             }

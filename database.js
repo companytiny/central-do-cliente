@@ -97,7 +97,8 @@ window.fetchRealData = async () => {
             historico_alteracao: c.historico_alteracao,
             ajuste_briefing: c.ajuste_briefing,
             ajuste_postagem: c.ajuste_postagem,
-            ajuste_criativo: c.ajuste_criativo
+            ajuste_criativo: c.ajuste_criativo,
+            resposta_interna: c.resposta_interna
         };
     });
     
