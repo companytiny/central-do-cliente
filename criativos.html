@@ -1590,7 +1590,20 @@
                 descLegenda.innerText = props.texto_criativo || 'Sem texto de criativo disponível.';
             }
             
-            descBriefing.innerText = props.texto_descritivo || 'Sem briefing original disponível.';
+            let briefingHtml = (props.texto_descritivo || '').replace(/\n/g, '<br>') || 'Nenhum briefing disponível.';
+            if (props.referencias && props.referencias.length > 0) {
+                briefingHtml += '<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">';
+                briefingHtml += '<strong style="color: var(--text-main); display: block; margin-bottom: 10px;">Links de Referência:</strong>';
+                briefingHtml += '<div style="display: flex; flex-direction: column; gap: 8px;">';
+                props.referencias.forEach((ref, index) => {
+                    briefingHtml += `<a href="${ref}" target="_blank" style="color: #3498db; text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; background: rgba(52, 152, 219, 0.1); padding: 8px 12px; border-radius: 6px; width: fit-content;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        Acessar Referência ${index + 1}
+                    </a>`;
+                });
+                briefingHtml += '</div></div>';
+            }
+            descBriefing.innerHTML = briefingHtml;
             
             let hasLegenda = false;
             if (isPostContext) {
