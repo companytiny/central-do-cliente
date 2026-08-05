@@ -54,16 +54,16 @@ window.fetchRealData = async () => {
     const formattedData = conteudos.map(c => {
         // Função helper para transformar string separada por vírgula ou JSON array em Array normal
         const parseLinks = (raw) => {
-            if (!raw) return [];
+            if (!raw || raw === '%%empty_data%%') return [];
             try {
                 if (typeof raw === 'string' && raw.trim().startsWith('[')) {
                     return JSON.parse(raw);
                 }
             } catch(e) { console.error("Erro no parse de links JSON:", e); }
             if (typeof raw === 'string') {
-                return raw.split(/[,\n\r]+/).map(l => l.trim()).filter(l => l);
+                return raw.split(/[,\n\r]+/).map(l => l.trim()).filter(l => l && l !== '%%empty_data%%');
             }
-            if (Array.isArray(raw)) return raw;
+            if (Array.isArray(raw)) return raw.filter(l => l !== '%%empty_data%%');
             return [];
         };
 
@@ -72,6 +72,8 @@ window.fetchRealData = async () => {
         // Fallback antigo caso links_arquivos venha
         const fallbackUrls = parseLinks(c.links_arquivos);
         const referenciasUrls = parseLinks(c.referencias);
+        
+        const clean = (val) => val === '%%empty_data%%' ? '' : val;
         
         let isoDate = c.data_postagem || '';
         if (isoDate.includes('/')) {
@@ -83,23 +85,23 @@ window.fetchRealData = async () => {
         
         return {
             id: c.id_ummense, // string identifier
-            titulo: c.titulo,
+            titulo: clean(c.titulo),
             data: isoDate,
-            status: c.status_cliente || '⏳ PENDENTE',
-            etapa: c.etapa_aprovacao || '', // Mapeando a coluna exata da Ummense
-            tag: c.tag,
-            texto_descritivo: c.texto_descritivo,
-            texto_briefing: c.legenda_postagem || c.texto_descritivo,
-            texto_criativo: c.legenda_criativo || c.texto_descritivo,
-            legenda_postagem: c.legenda_postagem,
-            legenda_criativo: c.legenda_criativo,
+            status: clean(c.status_cliente) || '⏳ PENDENTE',
+            etapa: clean(c.etapa_aprovacao) || '', // Mapeando a coluna exata da Ummense
+            tag: clean(c.tag),
+            texto_descritivo: clean(c.texto_descritivo),
+            texto_briefing: clean(c.legenda_postagem) || clean(c.texto_descritivo),
+            texto_criativo: clean(c.legenda_criativo) || clean(c.texto_descritivo),
+            legenda_postagem: clean(c.legenda_postagem),
+            legenda_criativo: clean(c.legenda_criativo),
             url_postagem: postagemUrls.length > 0 ? postagemUrls : fallbackUrls, // Array
             url_criativo: criativoUrls.length > 0 ? criativoUrls : fallbackUrls, // Array
-            historico_alteracao: c.historico_alteracao,
-            ajuste_briefing: c.ajuste_briefing,
-            ajuste_postagem: c.ajuste_postagem,
-            ajuste_criativo: c.ajuste_criativo,
-            resposta_interna: c.resposta_interna,
+            historico_alteracao: clean(c.historico_alteracao),
+            ajuste_briefing: clean(c.ajuste_briefing),
+            ajuste_postagem: clean(c.ajuste_postagem),
+            ajuste_criativo: clean(c.ajuste_criativo),
+            resposta_interna: clean(c.resposta_interna),
             referencias: referenciasUrls
         };
     });

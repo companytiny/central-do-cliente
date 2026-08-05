@@ -460,7 +460,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        
+        .modal-desc-box {
+            max-height: 250px;
+        }
+        @media (min-width: 768px) {
+            .modal-desc-box {
+                max-height: 400px;
+            }
+        }
         
         
         .stat-card.approved-card {
@@ -880,7 +887,7 @@
                     <button id="tab-legenda" style="padding:6px 12px; border:2px solid var(--accent-base); background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Legenda</button>
                     <button id="tab-briefing" style="padding:6px 12px; border:1px solid var(--border-color); background:transparent; color:var(--text-main); border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Briefing</button>
                 </div>
-                <div id="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; max-height:200px; overflow-y:auto; white-space:pre-wrap;">
+                <div id="modal-desc-box" class="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; overflow-y:auto; white-space:pre-wrap;">
                     <p id="modal-desc" style="margin:0; font-size:14px; line-height:1.5;"></p>
                     <p id="modal-desc-briefing" style="margin:0; font-size:14px; line-height:1.5; display:none;"></p>
                 </div>
