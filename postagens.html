@@ -1570,10 +1570,11 @@
                     ifr.src = finalUrl;
                     ifr.style.border = 'none';
                     ifr.style.width = '100%';
-                    ifr.style.height = window.innerWidth <= 768 ? '600px' : '400px';
+                    ifr.style.height = window.innerWidth <= 768 ? '75vh' : '400px';
                     ifr.style.borderRadius = '8px';
                     ifr.style.scrollSnapAlign = window.innerWidth <= 768 ? 'center' : 'start';
-                    ifr.allow = 'autoplay';
+                    ifr.allow = 'autoplay; fullscreen';
+                    ifr.setAttribute('allowfullscreen', 'true');
                     
                     if (urls.length > 1) {
                         ifr.style.minWidth = window.innerWidth <= 768 ? '85%' : '85%';
