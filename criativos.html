@@ -1775,7 +1775,7 @@
                         let finalUrl = url;
                         if (url.includes('drive.google.com/file/d/')) {
                             const fileId = url.split('/d/')[1].split('/')[0];
-                            finalUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                            finalUrl = `https://drive.google.com/file/d/${fileId}/preview?playsinline=1`;
                         }
                         const ifr = document.createElement('iframe');
                         ifr.src = finalUrl;
@@ -1792,8 +1792,6 @@
                         if (window.innerWidth > 768) {
                             ifr.allow = 'autoplay; fullscreen';
                             ifr.setAttribute('allowfullscreen', 'true');
-                        } else {
-                            ifr.allow = 'autoplay';
                         }
                         
                         if (urls.length > 1) {
