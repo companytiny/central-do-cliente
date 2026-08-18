@@ -1490,6 +1490,7 @@
                 iframeBox.style.alignItems = 'center';
                 iframeBox.style.padding = '20px 0';
                 iframeBox.style.minHeight = 'auto';
+                iframeBox.style.height = 'auto';
 
                 const btnViewMedia = document.createElement('button');
                 btnViewMedia.innerHTML = '&#9654; Visualizar Mídia';
@@ -1597,7 +1598,7 @@
                         ifr.src = finalUrl;
                         ifr.style.border = 'none';
                         ifr.style.width = '100%';
-                        if (window.innerWidth <= 768) {
+                        if (window.innerWidth <= 992 || /Mobi|Android/i.test(navigator.userAgent)) {
                             ifr.style.aspectRatio = dynamicAspectRatio;
                             ifr.style.height = 'auto';
                         } else {
@@ -1625,7 +1626,7 @@
                 };
 
                 btnViewMedia.onclick = () => {
-                    if (window.innerWidth <= 768) {
+                    if (window.innerWidth <= 992 || /Mobi|Android/i.test(navigator.userAgent)) {
                         const overlay = document.createElement('div');
                         overlay.id = 'fullscreen-media-modal';
                         overlay.style.position = 'fixed';
