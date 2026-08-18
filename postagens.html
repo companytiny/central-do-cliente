@@ -626,9 +626,10 @@
             border-color: var(--border-color);
         }
         .fc .fc-col-header-cell {
-            background-color: transparent !important;
+            background-color: var(--card-bg) !important;
             color: var(--text-main) !important;
             padding: 10px 0;
+            border-color: var(--border-color) !important;
         }
         .fc .fc-col-header-cell-cushion {
             color: var(--text-main) !important;
@@ -1569,7 +1570,7 @@
                     ifr.src = finalUrl;
                     ifr.style.border = 'none';
                     ifr.style.width = '100%';
-                    ifr.style.minHeight = '400px';
+                    ifr.style.height = window.innerWidth <= 768 ? '600px' : '400px';
                     ifr.style.borderRadius = '8px';
                     ifr.style.scrollSnapAlign = window.innerWidth <= 768 ? 'center' : 'start';
                     ifr.allow = 'autoplay';
