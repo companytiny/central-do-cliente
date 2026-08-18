@@ -1592,15 +1592,16 @@
                         let finalUrl = url;
                         if (url.includes('drive.google.com/file/d/')) {
                             const fileId = url.split('/d/')[1].split('/')[0];
-                            finalUrl = `https://drive.google.com/file/d/${fileId}/preview?playsinline=1`;
+                            finalUrl = `https://drive.google.com/file/d/${fileId}/preview`;
                         }
                         const ifr = document.createElement('iframe');
                         ifr.src = finalUrl;
                         ifr.style.border = 'none';
                         ifr.style.width = '100%';
                         if (window.innerWidth <= 992 || /Mobi|Android/i.test(navigator.userAgent)) {
-                            ifr.style.aspectRatio = dynamicAspectRatio;
-                            ifr.style.height = 'auto';
+                            ifr.style.height = '100%';
+                            carouselContainer.style.height = '100%';
+                            wrapper.style.height = '100%';
                         } else {
                             ifr.style.height = '400px';
                         }
