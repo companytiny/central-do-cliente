@@ -1498,6 +1498,16 @@
             const mainActions = modalComment.nextElementSibling;
             const modalHistorico = document.getElementById('modal-historico');
             
+            let dynamicAspectRatio = '4/5';
+            const upperTitle = (event.title || '').toUpperCase();
+            if (upperTitle.includes('REELS') || upperTitle.includes('STORIES') || upperTitle.includes('TIKTOK')) {
+                dynamicAspectRatio = '9/16';
+            } else if (upperTitle.includes('CARROSSEL') || upperTitle.includes('FEED') || upperTitle.includes('QUADRADO')) {
+                dynamicAspectRatio = '1/1';
+            } else if (upperTitle.includes('YOUTUBE') || upperTitle.includes('HORIZONTAL')) {
+                dynamicAspectRatio = '16/9';
+            }
+            
             let isPostContext = false;
             if (typeof isGuidedMode !== 'undefined' && isGuidedMode) {
                 if (guidedCategory === 'POST' || guidedCategory === 'BRIEFING') {
@@ -1755,7 +1765,7 @@
                 ifr.style.border = 'none';
                 ifr.style.width = '100%';
                 if (window.innerWidth <= 768) {
-                    ifr.style.aspectRatio = '9/16';
+                    ifr.style.aspectRatio = dynamicAspectRatio;
                     ifr.style.height = 'auto';
                 } else {
                     ifr.style.height = '400px';
