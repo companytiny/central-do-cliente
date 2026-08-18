@@ -625,6 +625,15 @@
         .fc-theme-standard .fc-scrollgrid {
             border-color: var(--border-color);
         }
+        .fc .fc-col-header-cell {
+            background-color: transparent !important;
+            color: var(--text-main) !important;
+            padding: 10px 0;
+        }
+        .fc .fc-col-header-cell-cushion {
+            color: var(--text-main) !important;
+            text-decoration: none;
+        }
         .fc .fc-toolbar-title {
             color: var(--text-main);
             font-family: var(--font-heading);
@@ -1546,70 +1555,32 @@
                     btnNext.style.justifyContent = 'center';
                     btnNext.style.boxShadow = '0 4px 6px rgba(0,0,0,0.3)';
                     btnNext.onclick = () => wrapper.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-                    
                     carouselContainer.appendChild(btnPrev);
                     carouselContainer.appendChild(btnNext);
                 }
                 
                 urls.forEach(url => {
-                      let isDrive = false;
-                      let fileId = '';
-                      let finalUrl = url;
-                      if (url.includes('drive.google.com/file/d/')) {
-                          isDrive = true;
-                          fileId = url.split('/d/')[1].split('/')[0];
-                          finalUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-                      }
-                      
-                      const mediaContainer = document.createElement('div');
-                      mediaContainer.style.width = '100%';
-                      mediaContainer.style.minHeight = '400px';
-                      mediaContainer.style.height = 'auto';
-                      mediaContainer.style.borderRadius = '8px';
-                      mediaContainer.style.scrollSnapAlign = window.innerWidth <= 768 ? 'center' : 'start';
-                      if (urls.length > 1) {
-                          mediaContainer.style.minWidth = window.innerWidth <= 768 ? '85%' : '85%';
-                          mediaContainer.style.flexShrink = '0';
-                      }
-                      
-                      if (isDrive && window.innerWidth <= 768) {
-                          const vid = document.createElement('video');
-                          vid.controls = true;
-                          vid.playsInline = true;
-                          vid.style.width = '100%';
-                          vid.style.height = 'auto';
-                          vid.style.minHeight = '400px';
-                          vid.style.borderRadius = '8px';
-                          vid.style.backgroundColor = '#000';
-                          vid.src = `https://drive.google.com/uc?export=download&id=${fileId}`;
-                          
-                          vid.onerror = () => {
-                              mediaContainer.innerHTML = '';
-                              const ifr = document.createElement('iframe');
-                              ifr.src = finalUrl;
-                              ifr.style.border = 'none';
-                              ifr.style.width = '100%';
-                              ifr.style.height = '100%';
-                              ifr.style.minHeight = '400px';
-                              ifr.style.borderRadius = '8px';
-                              ifr.allow = 'autoplay';
-                              mediaContainer.appendChild(ifr);
-                          };
-                          mediaContainer.appendChild(vid);
-                      } else {
-                          const ifr = document.createElement('iframe');
-                          ifr.src = finalUrl;
-                          ifr.style.border = 'none';
-                          ifr.style.width = '100%';
-                          ifr.style.height = '100%';
-                          ifr.style.minHeight = '400px';
-                          ifr.style.borderRadius = '8px';
-                          ifr.allow = 'autoplay';
-                          mediaContainer.appendChild(ifr);
-                      }
-                      
-                      wrapper.appendChild(mediaContainer);
-                  });
+                    let finalUrl = url;
+                    if (url.includes('drive.google.com/file/d/')) {
+                        const fileId = url.split('/d/')[1].split('/')[0];
+                        finalUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                    }
+                    const ifr = document.createElement('iframe');
+                    ifr.src = finalUrl;
+                    ifr.style.border = 'none';
+                    ifr.style.width = '100%';
+                    ifr.style.minHeight = '400px';
+                    ifr.style.borderRadius = '8px';
+                    ifr.style.scrollSnapAlign = window.innerWidth <= 768 ? 'center' : 'start';
+                    ifr.allow = 'autoplay';
+                    
+                    if (urls.length > 1) {
+                        ifr.style.minWidth = window.innerWidth <= 768 ? '85%' : '85%';
+                        ifr.style.flexShrink = '0';
+                    }
+                    
+                    wrapper.appendChild(ifr);
+                });
                 
                 carouselContainer.appendChild(wrapper);
                 iframeBox.appendChild(carouselContainer);
