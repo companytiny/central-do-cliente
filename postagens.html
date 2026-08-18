@@ -7,6 +7,7 @@
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesquisa de Marketing e Público-alvo | Tiny Creative</title>
+    <link rel="icon" href="logo.png" type="image/png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -974,12 +975,26 @@
             
             if (typeof calendars !== 'undefined' && calendars.postagens) {
                 calendars.postagens.removeAllEvents();
-                const fakeEvents = postagens.map(p => ({
-                    id: String(p.id),
-                    title: p.titulo,
-                    start: p.data,
-                    extendedProps: { ...p }
-                }));
+                const fakeEvents = postagens
+                    .filter(p => (p.tag || '').toUpperCase().includes('MÍDIAS SOCIAIS'))
+                    .map(p => {
+                        const getEventColor = (status) => {
+                            const s = (status || '').toLowerCase();
+                            if (s.includes('aprovado') || s.includes('concluído')) return 'rgba(46, 204, 113, 0.25)'; // verde transparente
+                            if (s.includes('correção') || s.includes('ajuste') || s.includes('alteração')) return '#3498db'; // azul
+                            if (s.includes('aprovação') || s.includes('pendente')) return '#f39c12'; // amarelo
+                            return 'var(--accent-base)'; // verde padrão
+                        };
+                        return {
+                            id: String(p.id),
+                            title: p.titulo,
+                            start: p.data,
+                            extendedProps: { ...p },
+                            backgroundColor: getEventColor(p.status),
+                            textColor: (p.status || '').toLowerCase().includes('aprovado') ? 'rgba(255,255,255,0.4)' : '#ffffff',
+                            borderColor: getEventColor(p.status)
+                        };
+                    });
                 calendars.postagens.addEventSource(fakeEvents);
                 if (typeof updateDashboard === 'function') updateDashboard(window.mockDatabase);
             }
@@ -1538,7 +1553,7 @@
                     let finalUrl = url;
                     if (url.includes('drive.google.com/file/d/')) {
                         const fileId = url.split('/d/')[1].split('/')[0];
-                        finalUrl = `https://drive.google.com/file/d/${fileId}/preview?rm=minimal`;
+                        finalUrl = `https://drive.google.com/file/d/${fileId}/preview`;
                     }
                     const ifr = document.createElement('iframe');
                     ifr.src = finalUrl;
