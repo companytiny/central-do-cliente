@@ -1489,6 +1489,7 @@
                 iframeBox.style.flexDirection = 'column';
                 iframeBox.style.alignItems = 'center';
                 iframeBox.style.padding = '20px 0';
+                iframeBox.style.minHeight = 'auto';
 
                 const btnViewMedia = document.createElement('button');
                 btnViewMedia.innerHTML = '&#9654; Visualizar Mídia';
@@ -1604,8 +1605,12 @@
                         }
                         ifr.style.borderRadius = '8px';
                         ifr.style.scrollSnapAlign = window.innerWidth <= 768 ? 'center' : 'start';
-                        ifr.allow = 'autoplay; fullscreen';
-                        ifr.setAttribute('allowfullscreen', 'true');
+                        if (window.innerWidth > 768) {
+                            ifr.allow = 'autoplay; fullscreen';
+                            ifr.setAttribute('allowfullscreen', 'true');
+                        } else {
+                            ifr.allow = 'autoplay';
+                        }
                         
                         if (urls.length > 1) {
                             ifr.style.minWidth = window.innerWidth <= 768 ? '100%' : '85%';
