@@ -1500,8 +1500,8 @@
                 wrapper.style.overflowX = 'auto';
                 wrapper.style.width = '100%';
                 wrapper.style.paddingBottom = '5px';
-                wrapper.style.paddingLeft = window.innerWidth <= 768 ? '7.5%' : '0';
-                wrapper.style.paddingRight = window.innerWidth <= 768 ? '7.5%' : '0';
+                wrapper.style.paddingLeft = '0';
+                wrapper.style.paddingRight = '0';
                 wrapper.style.scrollBehavior = 'smooth';
                 wrapper.style.scrollSnapType = 'x mandatory';
                 // Ocultar scrollbar nativa via CSS inline o máximo possível
@@ -1577,7 +1577,7 @@
                     ifr.setAttribute('allowfullscreen', 'true');
                     
                     if (urls.length > 1) {
-                        ifr.style.minWidth = window.innerWidth <= 768 ? '85%' : '85%';
+                        ifr.style.minWidth = window.innerWidth <= 768 ? '100%' : '85%';
                         ifr.style.flexShrink = '0';
                     }
                     
