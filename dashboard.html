@@ -1966,34 +1966,50 @@
         </div>
 
         <script>
-        const currentUserStr = localStorage.getItem('tiny_current_user');
-        if (!currentUserStr) {
-            window.location.href = 'index.html';
-        } else {
-            const user = JSON.parse(currentUserStr);
-            document.getElementById('client-name').innerText = user.cliente || 'Cliente';
-            if (user.avatarUrl) {
-                document.getElementById('client-avatar').src = user.avatarUrl;
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (window.supabaseClient) {
+                const { data: { session } } = await window.supabaseClient.auth.getSession();
+                if (!session) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                // Fetch the company name just to display it
+                if (typeof window.fetchRealData === 'function') {
+                    await window.fetchRealData();
+                }
+                if (window.currentClientName) {
+                    document.getElementById('client-name').innerText = window.currentClientName;
+                }
+                
+                // Fetch reportei_embed_url from profiles
+                try {
+                    const { data: profileData } = await window.supabaseClient
+                        .from('profiles')
+                        .select('reportei_embed_url')
+                        .eq('id', session.user.id)
+                        .single();
+                        
+                    let embedUrl = profileData?.reportei_embed_url;
+                    
+                    if (embedUrl && embedUrl.trim() !== '') {
+                        document.getElementById('dashboard-container').style.display = 'block';
+                        document.getElementById('reportei-iframe').src = embedUrl;
+                    } else {
+                        document.getElementById('no-dashboard-msg').style.display = 'block';
+                    }
+                } catch(e) {
+                    console.error("Erro ao buscar dashboard:", e);
+                    document.getElementById('no-dashboard-msg').style.display = 'block';
+                }
             }
-            
-            // Lógica do Reportei dinâmico
-            if (user.reportei_embed_url && user.reportei_embed_url.trim() !== '') {
-                document.getElementById('dashboard-container').style.display = 'block';
-                document.getElementById('reportei-iframe').src = user.reportei_embed_url;
-            } else {
-                document.getElementById('no-dashboard-msg').style.display = 'block';
-            }
-        }
+        });
         
         function openSwitchUserModal() {
             document.getElementById('switch-user-modal').style.display = 'flex';
         }
         function closeSwitchUserModal() {
             document.getElementById('switch-user-modal').style.display = 'none';
-        }
-        function confirmSwitchUser() {
-            localStorage.removeItem('tiny_current_user');
-            window.location.href = 'index.html';
         }
     </script>
         
