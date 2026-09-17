@@ -989,6 +989,14 @@
                     let embedUrl = profileData?.reportei_embed_url;
                     
                     if (embedUrl && embedUrl.trim() !== '') {
+                        // Se o cliente colar o código iframe inteiro ao invés só do link
+                        if (embedUrl.includes('<iframe') && embedUrl.includes('src=')) {
+                            const match = embedUrl.match(/src="([^"]+)"/);
+                            if (match && match[1]) {
+                                embedUrl = match[1];
+                            }
+                        }
+                        
                         document.getElementById('dashboard-container').style.display = 'block';
                         document.getElementById('reportei-iframe').src = embedUrl;
                     } else {
