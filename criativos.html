@@ -1737,7 +1737,7 @@
                         
                         const btnDownItem = document.createElement('a');
                         btnDownItem.href = downloadUrl;
-                        btnDownItem.target = '_blank';
+                        btnDownItem.target = '_self';
                         btnDownItem.innerHTML = urls.length > 1 ? '&#11015; Baixar Arquivo ' + String(idx + 1).padStart(2, '0') : '&#11015; Baixar Arquivo';
                         btnDownItem.style.background = 'rgba(255,255,255,0.05)';
                         btnDownItem.style.color = '#fff';
