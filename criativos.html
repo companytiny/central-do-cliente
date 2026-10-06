@@ -1004,11 +1004,16 @@
                 <button class="btn-close-modal" onclick="closeModal()">×</button>
                 <h3 id="modal-title">Título do Post</h3>
                 <div id="modal-etapa-badge" style="display:none; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold; color:#fff; margin-bottom:15px; margin-top:-5px; letter-spacing:0.5px; width:fit-content; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></div>
-                <div id="modal-tabs-container" style="display:flex; gap:10px; margin-bottom:10px;">
-                    <button id="tab-legenda" style="padding:6px 12px; border:2px solid var(--accent-base); background:var(--primary); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Legenda</button>
+                <div id="modal-tabs-container" style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+                    <button id="tab-legenda" style="padding:6px 12px; border:2px solid var(--accent-base); background:var(--accent-base); color:#fff; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Legenda</button>
                     <button id="tab-briefing" style="padding:6px 12px; border:1px solid var(--border-color); background:transparent; color:var(--text-main); border-radius:4px; cursor:pointer; font-size:12px; font-weight:600; flex:1;">Briefing</button>
+                    
+                    <div style="display:flex; gap:5px; margin-left:auto;">
+                        <button onclick="changeTextSize(-2)" title="Reduzir texto" style="background:transparent; border:1px solid var(--border-color); color:var(--text-main); border-radius:4px; width:30px; height:30px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center;">A-</button>
+                        <button onclick="changeTextSize(2)" title="Ampliar texto" style="background:transparent; border:1px solid var(--border-color); color:var(--text-main); border-radius:4px; width:30px; height:30px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center;">A+</button>
+                    </div>
                 </div>
-                <div id="modal-desc-box" class="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; overflow-y:auto; white-space:pre-wrap;">
+                <div id="modal-desc-box" class="modal-desc-box" style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:20px; overflow-y:auto; overflow-x:hidden; white-space:pre-wrap; word-break:break-word; overflow-wrap:break-word;">
                     <p id="modal-desc" style="margin:0; font-size:14px; line-height:1.5;"></p>
                     <p id="modal-desc-briefing" style="margin:0; font-size:14px; line-height:1.5; display:none;"></p>
                 </div>
@@ -2240,6 +2245,17 @@
                 const overlay = document.getElementById('timeout-overlay');
                 if (overlay) overlay.style.display = 'flex';
             }, 50 * 60 * 1000); // 50 minutos
+        
+        let currentTextSize = 14;
+        window.changeTextSize = function(delta) {
+            currentTextSize += delta;
+            if(currentTextSize < 10) currentTextSize = 10;
+            if(currentTextSize > 28) currentTextSize = 28;
+            const desc = document.getElementById('modal-desc');
+            const briefing = document.getElementById('modal-desc-briefing');
+            if(desc) desc.style.fontSize = currentTextSize + 'px';
+            if(briefing) briefing.style.fontSize = currentTextSize + 'px';
+        };
         </script>
         
 </body>
